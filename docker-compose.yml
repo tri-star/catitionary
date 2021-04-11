@@ -1,0 +1,11 @@
+version: "3.7"
+
+services:
+  web:
+    build:
+      context: "."
+      args:
+        UID: "$UID"
+        GID: "$GID"
+    ports:
+      - "9000"
