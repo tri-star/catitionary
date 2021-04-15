@@ -6,6 +6,8 @@ info:
 servers:
   - url: "http://127.0.0.1:9001/api"
     description: "ローカル環境"
+  - url: "http://127.0.0.1:4010"
+    description: "PRISM"
 paths:
   /names:
     get:

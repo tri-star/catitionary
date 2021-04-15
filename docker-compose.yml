@@ -13,6 +13,15 @@ services:
     depends_on:
       - "db"
 
+  prism:
+    image: stoplight/prism:4
+    init: true
+    command: "mock -h 0.0.0.0 /tmp/swagger/swagger.yml"
+    volumes:
+      - "${PWD}:/tmp"
+    ports:
+      - "4010:4010"
+
   # mock:
   #   image: "urban-theory/catitionary-mock"
   #   build:
