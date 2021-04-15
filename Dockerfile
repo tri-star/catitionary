@@ -12,7 +12,9 @@ RUN apt update && \
   git unzip zlib1g-dev libzip-dev vim default-mysql-client && \
   locale-gen ja_JP.UTF-8 && \
   echo "export LANG=ja_JP.UTF-8" >> ~/.bashrc && \
-  apt clean
+  apt autoremove -y && \
+  apt clean && \
+  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN docker-php-ext-install pdo_mysql
 RUN docker-php-ext-install zip
