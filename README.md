@@ -46,8 +46,6 @@ https://zenn.dev/mpyw/articles/ce7d09eb6d8117
   - 主な処理を UseCase に記述する
   - UseCase 間でも共通化させたいロジックは Service クラスとして Domain 層に配置する
 
-- ## アプリケーションの機能単位で UseCase クラスを作成し、メインのロジックを実装する
-
 ### API
 
 - Open API 関連のツールを使用し API 仕様書を管理
