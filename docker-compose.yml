@@ -1,7 +1,8 @@
 version: "3.7"
 
 services:
-  web:
+  app:
+    image: "urban-theory/catitionary"
     build:
       context: "."
       args:
@@ -11,6 +12,19 @@ services:
       - "${EXPOSE_APP_PORT:-9000}:9000"
     depends_on:
       - "db"
+
+  # mock:
+  #   image: "urban-theory/catitionary-mock"
+  #   build:
+  #     context: "./docker/mock"
+  #     args:
+  #       UID: "$UID"
+  #       GID: "$GID"
+  #   command: "php -S 0.0.0.0:9001 -t /app/"
+  #   ports:
+  #     - "${EXPOSE_MOCK_PORT:-9001}:9001"
+  #   volumes:
+  #     - "./mock/php/lib:/app"
 
   db:
     image: "mysql:8.0"
