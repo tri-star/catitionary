@@ -12,14 +12,17 @@ services:
       - "app"
 
   app:
-    image: "urban-theory/catitionary"
+    image: "urban-theory/catitionary-local"
     build:
+      target: local
       context: "."
       args:
         UID: "$UID"
         GID: "$GID"
     ports:
       - "9000"
+    volumes:
+      - ".:/app"
     depends_on:
       - "db"
 
