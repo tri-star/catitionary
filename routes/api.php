@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Cat\CatCharactericsAction;
 use App\Http\Controllers\Api\Cat\CatTypesAction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -21,4 +22,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::prefix('/cat')->group(function () {
     Route::get('/types', [CatTypesAction::class, 'invoke']);
+    Route::get('/characterics', [CatCharactericsAction::class, 'invoke']);
 });
