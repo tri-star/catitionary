@@ -1,6 +1,16 @@
 version: "3.7"
 
 services:
+  web:
+    image: "nginx:1.19-alpine"
+    ports:
+      - "${EXPOSE_WEB_PORT:-9000}:80"
+    volumes:
+      - "./docker/web/templates:/etc/nginx/templates"
+      - "./public/favicon.ico:/app/public/favicon.ico"
+    depends_on:
+      - "app"
+
   app:
     image: "urban-theory/catitionary"
     build:
@@ -9,7 +19,7 @@ services:
         UID: "$UID"
         GID: "$GID"
     ports:
-      - "${EXPOSE_APP_PORT:-9000}:9000"
+      - "9000"
     depends_on:
       - "db"
 

@@ -1,0 +1,20 @@
+server {
+  listen *:80 default_server;
+
+  root /app/public;
+
+  location / {
+    try_files $uri @app;
+  }
+
+  location @app {
+    include fastcgi_params;
+    fastcgi_pass app:9000;
+    fastcgi_param  SCRIPT_FILENAME  $realpath_root/index.php;
+  }
+
+  userid          on;
+  userid_name     uid;
+  userid_path     /;
+  userid_expires  365d;
+}
