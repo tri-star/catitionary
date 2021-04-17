@@ -1,0 +1,6 @@
+{
+  "phpunit.command": "docker-compose run --rm app",
+  "phpunit.paths": {
+      "${workspaceFolder}": "/app"
+  }
+}
