@@ -60,7 +60,8 @@ services:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     volumes:
       - "db:/var/lib/mysql"
-      - "./docker/db:/etc/mysql/conf.d"
+      - "./docker/db/conf.d:/etc/mysql/conf.d"
+      - "./docker/db/initdb.d:/docker-entrypoint-initdb.d"
     healthcheck:
       test: ["CMD", "mysqladmin", "ping"]
 
