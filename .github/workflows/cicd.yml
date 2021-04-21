@@ -32,8 +32,8 @@ jobs:
         run: php artisan key:generate
       - name: Create Database
         run: |
-          mysql -u root -proot -e "create user catitionary@'127.0.0.1' identified by 'secret'; "
-          mysql -u root -proot -e "grant all privileges on catitionary_test.* to catitionary@'127.0.0.1';"
+          mysql -u root -proot -e "create user cat@'127.0.0.1' identified by 'secret'; "
+          mysql -u root -proot -e "grant all privileges on catitionary_test.* to cat@'127.0.0.1';"
           mysql -u root -proot -e "create database catitionary_test default charset utf8mb4;"
       - name: Execute tests (Unit and Feature tests) via PHPUnit
         env:
