@@ -169,10 +169,14 @@ components:
       properties:
         name:
           type: string
-        type:
-          $ref: "#/components/schemas/CatTypeId"
-        character:
-          $ref: "#/components/schemas/CharactericsTypeId"
+        types:
+          type: array
+          items:
+            $ref: "#/components/schemas/CatTypeId"
+        characters:
+          type: array
+          items:
+            $ref: "#/components/schemas/CharactericsTypeId"
     NamePatternType:
       type: string
       description: |
