@@ -1,72 +1,30 @@
 <?php
 
-declare(strict_characterics=1);
-
 namespace App\Domain;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
 /**
- * 猫の特徴
+ * \App\Domain\CatCharacterics
+ *
+ * @property string $id
+ * @property string $name
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|CatCharacterics newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|CatCharacterics newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|CatCharacterics query()
+ * @method static \Illuminate\Database\Eloquent\Builder|CatCharacterics whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CatCharacterics whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CatCharacterics whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CatCharacterics whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
-class CatCharacterics
+class CatCharacterics extends Model
 {
-    /** @var string 長毛 */
-    public const LONG_HAIR = 'long-hair';
+    use HasFactory;
 
-    /** @var string どっしり */
-    public const MASSIVE = 'massive';
-
-    /** @var string カギしっぽ */
-    public const KINKED_TAIL = 'kinked-tail';
-
-    private const NAMES = [
-        self::LONG_HAIR   => '長毛',
-        self::MASSIVE     => 'どっしり',
-        self::KINKED_TAIL => 'カギしっぽ',
-    ];
-
-    /** @var string 特徴 */
-    private $characterics;
-
-    public function __construct(string $characterics)
-    {
-        if (!self::isValid($characterics)) {
-            throw new \RuntimeException("無効な特徴が指定されました: {$characterics}");
-        }
-        $this->characterics = $characterics;
-    }
-
-    public function value()
-    {
-        return $this->characterics;
-    }
-
-
-    /**
-     * 名前のリストを返す
-     * @return string[]
-     */
-    public static function getList(): array
-    {
-        return self::NAMES;
-    }
-
-    /**
-     * 特徴のコード値の一覧を返す
-     * @return string[]
-     */
-    public static function getCharacterics(): array
-    {
-        return array_keys(self::NAMES);
-    }
-
-
-    /**
-     * 有効な値化を返す
-     * @param string $characterics 種類のコード
-     * @return bool
-     */
-    public static function isValid(string $characterics): bool
-    {
-        return in_array($characterics, self::getcharacterics(), true);
-    }
+    protected $keyType = 'string';
+    public $incrementing = false;
 }

@@ -12,13 +12,12 @@ class CatCharactericsAction extends Controller
 {
     public function invoke()
     {
-        $array = [];
-        foreach (CatCharacterics::getList() as $key=>$value) {
-            $array[] = [
-                'id'   => $key,
-                'name' => $value,
+        $responseJson = CatCharacterics::all()->map(function ($row) {
+            return [
+                'id'   => $row->id,
+                'name' => $row->name,
             ];
-        }
-        return new JsonResponse($array);
+        });
+        return new JsonResponse($responseJson);
     }
 }
