@@ -12,13 +12,12 @@ class CatTypesAction extends Controller
 {
     public function invoke()
     {
-        $array = [];
-        foreach (CatType::getList() as $key=>$value) {
-            $array[] = [
-                'id'   => $key,
-                'name' => $value,
+        $catTypes = CatType::all()->map(function (CatType $item) {
+            return [
+                'id'   => $item->id,
+                'name' => $item->name,
             ];
-        }
-        return new JsonResponse($array);
+        })->toArray();
+        return new JsonResponse($catTypes);
     }
 }
