@@ -2,12 +2,14 @@ server {
   listen *:80 default_server;
 
   root /app/public;
+  index index.html;
 
   location / {
-    try_files $uri @app;
+    try_files $uri $uri/index.html @app;
   }
 
   location @app {
+    index index.php;
     include fastcgi_params;
     fastcgi_pass app:9000;
     fastcgi_param  SCRIPT_FILENAME  $realpath_root/index.php;

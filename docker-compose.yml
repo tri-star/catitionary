@@ -1,39 +1,40 @@
-version: "3.7"
+version: '3.7'
 
 services:
   web:
-    image: "nginx:1.19-alpine"
+    image: 'urban-theory/catitionary-web'
+    build:
+      target: web
+      context: '.'
     ports:
-      - "${EXPOSE_WEB_PORT:-9000}:80"
+      - '${EXPOSE_WEB_PORT:-9000}:80'
     volumes:
-      - "./docker/web/templates:/etc/nginx/templates"
-      - "./public/favicon.ico:/app/public/favicon.ico"
-    depends_on:
-      - "app"
+      - './docker/web/templates:/etc/nginx/templates'
+      - './dist:/app/public'
 
   app:
-    image: "urban-theory/catitionary-local"
+    image: 'urban-theory/catitionary-local'
     build:
       target: local
-      context: "."
+      context: '.'
       args:
-        UID: "$UID"
-        GID: "$GID"
+        UID: '$UID'
+        GID: '$GID'
     ports:
-      - "9000"
+      - '9000'
     volumes:
-      - ".:/app"
+      - '.:/app'
     depends_on:
-      - "db"
+      - 'db'
 
   prism:
     image: stoplight/prism:4
     init: true
-    command: "mock -h 0.0.0.0 /tmp/swagger/swagger.yml"
+    command: 'mock -h 0.0.0.0 /tmp/swagger/swagger.yml'
     volumes:
-      - "${PWD}:/tmp"
+      - '${PWD}:/tmp'
     ports:
-      - "4010:4010"
+      - '4010:4010'
 
   # mock:
   #   image: "urban-theory/catitionary-mock"
@@ -49,39 +50,39 @@ services:
   #     - "./mock/php/lib:/app"
 
   db:
-    image: "mysql:8.0"
+    image: 'mysql:8.0'
     ports:
-      - "${EXPOSE_DB_PORT:-3306}:3306"
+      - '${EXPOSE_DB_PORT:-3306}:3306'
     environment:
-      MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
-      MYSQL_DATABASE: "${DB_DATABASE}"
-      MYSQL_USER: "${DB_USERNAME}"
-      MYSQL_PASSWORD: "${DB_PASSWORD}"
-      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_DATABASE: '${DB_DATABASE}'
+      MYSQL_USER: '${DB_USERNAME}'
+      MYSQL_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
     volumes:
-      - "db:/var/lib/mysql"
-      - "./docker/db/conf.d:/etc/mysql/conf.d"
-      - "./docker/db/initdb.d:/docker-entrypoint-initdb.d"
+      - 'db:/var/lib/mysql'
+      - './docker/db/conf.d:/etc/mysql/conf.d'
+      - './docker/db/initdb.d:/docker-entrypoint-initdb.d'
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping"]
+      test: ['CMD', 'mysqladmin', 'ping']
 
   swagger:
-    image: "swaggerapi/swagger-ui:v3.46.0"
+    image: 'swaggerapi/swagger-ui:v3.46.0'
     environment:
       API_URL: ./swagger/swagger.yml
     volumes:
       - ./swagger:/usr/share/nginx/html/swagger
     ports:
-      - "${EXPOSE_SWAGGER_PORT:-8080}:8080"
+      - '${EXPOSE_SWAGGER_PORT:-8080}:8080'
 
   swagger-editor:
-    image: "swaggerapi/swagger-editor:v3.15.11"
+    image: 'swaggerapi/swagger-editor:v3.15.11'
     environment:
       URL: ./swagger/swagger.yml
     volumes:
-      - "./swagger:/usr/share/nginx/html/swagger"
+      - './swagger:/usr/share/nginx/html/swagger'
     ports:
-      - "${EXPOSE_SWAGGER_EDITOR_PORT:-8081}:8080"
+      - '${EXPOSE_SWAGGER_EDITOR_PORT:-8081}:8080'
 
 volumes:
   db:
