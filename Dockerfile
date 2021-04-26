@@ -1,3 +1,28 @@
+FROM node:15-alpine AS js-builder
+
+COPY ./package.json /app/package.json
+COPY ./yarn.lock /app/yarn.lock
+
+# RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
+#   curl https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+#   echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+
+WORKDIR /app
+
+RUN yarn install --pure-lockfile
+COPY ./.env /app/.env
+COPY ./webpack.config.js /app/webpack.config.js
+COPY ./babel.config.js /app/babel.config.js
+COPY ./javascript /app/javascript
+RUN yarn build
+
+
+FROM nginx:1.19-alpine AS web
+
+COPY ./docker/web/templates/default.conf.template /etc/nginx/templates/default.conf.template
+COPY --from=js-builder /app/dist /app/public
+
+
 FROM php:8.0-fpm AS base
 
 ARG UID=1000
@@ -54,6 +79,17 @@ USER app_user
 FROM base AS local
 
 USER root
+
+RUN curl -fsSL https://deb.nodesource.com/setup_15.x | bash - && \
+  curl https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+  echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+
+RUN apt update && \
+  apt install -y locales \
+  nodejs yarn && \
+  apt autoremove -y && \
+  apt clean && \
+  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN pecl install xdebug && \
   docker-php-ext-enable xdebug
