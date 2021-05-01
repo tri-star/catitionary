@@ -23,7 +23,7 @@ class CatCharactericsFactory extends Factory
     {
         $base = $this->faker->unique()->word;
         return [
-            'id'   => "character-id-{$base}",
+            'key'  => "character-key-{$base}",
             'name' => "character-name-{$base}",
         ];
     }

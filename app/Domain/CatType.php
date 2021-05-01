@@ -20,6 +20,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|CatType whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CatType whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property string $key
+ * @method static \Database\Factories\Domain\CatTypeFactory factory(...$parameters)
+ * @method static \Illuminate\Database\Eloquent\Builder|CatType whereKey($value)
  */
 class CatType extends Model
 {

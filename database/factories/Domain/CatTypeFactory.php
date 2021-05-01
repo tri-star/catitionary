@@ -23,7 +23,7 @@ class CatTypeFactory extends Factory
     {
         $base = $this->faker->unique()->word;
         return [
-            'id'   => "id-{$base}",
+            'key'  => "key-{$base}",
             'name' => "name-{$base}",
         ];
     }

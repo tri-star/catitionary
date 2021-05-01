@@ -14,7 +14,7 @@ class CatTypesAction extends Controller
     {
         $catTypes = CatType::all()->map(function (CatType $item) {
             return [
-                'id'   => $item->id,
+                'id'   => $item->key,
                 'name' => $item->name,
             ];
         })->toArray();

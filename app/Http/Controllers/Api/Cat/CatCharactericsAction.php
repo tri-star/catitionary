@@ -14,7 +14,7 @@ class CatCharactericsAction extends Controller
     {
         $responseJson = CatCharacterics::all()->map(function ($row) {
             return [
-                'id'   => $row->id,
+                'id'   => $row->key,
                 'name' => $row->name,
             ];
         });
