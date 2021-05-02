@@ -27,7 +27,4 @@ use Illuminate\Database\Eloquent\Model;
 class CatCharacterics extends Model
 {
     use HasFactory;
-
-    protected $keyType = 'string';
-    public $incrementing = false;
 }
