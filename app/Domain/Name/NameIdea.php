@@ -6,52 +6,59 @@ namespace App\Domain\Name;
 
 use App\Domain\CatCharacterics;
 use App\Domain\CatType;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class NameIdea
+/**
+ * App\Domain\Name\NameIdea
+ *
+ * @property int $id
+ * @property string $name
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|CatType[] $catTypes
+ * @property-read int|null $cat_types_count
+ * @method static \Database\Factories\Domain\Name\NameIdeaFactory factory(...$parameters)
+ * @method static \Illuminate\Database\Eloquent\Builder|NameIdea newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|NameIdea newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|NameIdea query()
+ * @method static \Illuminate\Database\Eloquent\Builder|NameIdea whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|NameIdea whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|NameIdea whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|NameIdea whereUpdatedAt($value)
+ * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|CatCharacterics[] $catCharacterics
+ * @property-read int|null $cat_characterics_count
+ */
+class NameIdea extends Model
 {
-    /** @var string $name 名前の案 */
-    private $name;
+    use HasFactory;
 
-    /** @var CatType[] 猫の種類 */
-    private array $types;
+    const NAME_MAX_LENGTH = 50;
 
-    /** @var CatCharacterics[] 猫の特徴 */
-    private array $characters;
-
-
-    /**
-     * @var string $name
-     * @var CatType[] 猫の種類
-     * @var CatCharacterics 猫の特徴
-     */
-    public function __construct(string $name, array $types, array $characters)
+    public function catTypes(): BelongsToMany
     {
-        $this->name = $name;
-        $this->types = $types;
-        $this->characters = $characters;
+        return $this->belongsToMany(
+            CatType::class,
+            'name_ideas_cat_types',
+            'name_idea_id',
+            'cat_type_id',
+            'id',
+            'id'
+        );
     }
 
 
-    public function getName(): string
+    public function catCharacterics(): BelongsToMany
     {
-        return $this->name;
-    }
-
-
-    /**
-     * @return CatType[]
-     */
-    public function getTypes(): array
-    {
-        return $this->types;
-    }
-
-
-    /**
-     * @return CatCharacterics[]
-     */
-    public function getCharacters(): array
-    {
-        return $this->characters;
+        return $this->belongsToMany(
+            CatCharacterics::class,
+            'name_ideas_cat_characterics',
+            'name_idea_id',
+            'cat_characterics_id',
+            'id',
+            'id'
+        );
     }
 }
