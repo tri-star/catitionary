@@ -65,6 +65,8 @@ paths:
       responses:
         '200':
           description: 成功
+        '400':
+          $ref: '#/components/responses/validationError'
 
   /names/patterns:
     post:
@@ -83,6 +85,8 @@ paths:
       responses:
         '200':
           description: 成功
+        '400':
+          $ref: '#/components/responses/validationError'
 
   /cat/types:
     get:
@@ -198,6 +202,33 @@ components:
           $ref: '#/components/schemas/CatTypeId'
         character:
           $ref: '#/components/schemas/CharactericsTypeId'
+    ValidationErrorItem:
+      type: object
+      description: 'バリデーションエラー1件分を表すオブジェクト'
+      properties:
+        field:
+          type: string
+          example: 'name'
+        code:
+          $ref: '#/components/schemas/ValidationErrorCode'
+    ValidationErrorCode:
+      type: string
+      description: 'バリデーションエラーの種類'
+      enum:
+        - 'missing'
+        - 'resource_not_found'
+        - 'invalid_format'
+        - 'already_exists'
+        - 'out_of_range'
+  responses:
+    validationError:
+      description: 'バリデーションエラー'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/ValidationErrorItem'
 
 tags:
   - name: names
