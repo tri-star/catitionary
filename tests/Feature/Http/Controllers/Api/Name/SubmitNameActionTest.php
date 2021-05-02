@@ -4,24 +4,29 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Http\Controllers\Api\Name;
 
-use App\Domain\Name\NameIdea;
+use App\Domain\CatCharacterics;
+use App\Domain\CatType;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class SubmitNameActionTest extends TestCase
 {
-    public function test通常ケース()
+    use RefreshDatabase;
+
+    public function test__登録成功()
     {
-        NameIdea::factory()->make();
+        $catType = CatType::factory()->create();
+        $catCharacterics = CatCharacterics::factory()->create();
 
-        // $expectedResponse = [];
-        // foreach (CatCharacterics::all() as $characterics) {
-        //     $expectedResponse[] = [
-        //         'id'   => $characterics->id,
-        //         'name' => $characterics->name,
-        //     ];
-        // }
-
-        // $this->get('/api/cat/characterics')
-        //     ->assertJson($expectedResponse);
+        $this->postJson('/api/names', [
+            'name'       => 'test',
+            'types'      => [
+                $catType->key,
+            ],
+            'characters' => [
+                $catCharacterics->key,
+            ],
+        ])
+        ->assertStatus(200);
     }
 }

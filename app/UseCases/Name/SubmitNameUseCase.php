@@ -14,11 +14,11 @@ use Illuminate\Support\Facades\DB;
 class SubmitNameUseCase
 {
     /**
-     * @var string $name
-     * @var string[] $ypes
-     * @var string[] $characters
+     * @var string|null $name
+     * @var string[]|null $ypes
+     * @var string[]|null $characters
      */
-    public function execute(string $name, array $types, array $characters)
+    public function execute(?string $name, ?array $types, ?array $characters)
     {
         $validator = NameIdeaValidatorFactory::fromApiInput($name, $types, $characters);
         if ($validator->fails()) {
