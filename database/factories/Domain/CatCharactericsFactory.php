@@ -21,7 +21,7 @@ class CatCharactericsFactory extends Factory
      */
     public function definition()
     {
-        $base = $this->faker->unique()->word;
+        $base = $this->faker->unique()->word();
         return [
             'key'  => "character-key-{$base}",
             'name' => "character-name-{$base}",

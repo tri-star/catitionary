@@ -37,6 +37,10 @@ class NameIdea extends Model
 
     const NAME_MAX_LENGTH = 50;
 
+    protected $fillable = [
+        'name',
+    ];
+
     public function catTypes(): BelongsToMany
     {
         return $this->belongsToMany(

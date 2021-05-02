@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Domain\Name;
+namespace Tests\Unit\Domain\Name;
 
 use App\Domain\CatCharacterics;
 use App\Domain\CatType;

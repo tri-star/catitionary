@@ -21,7 +21,7 @@ class CatTypeFactory extends Factory
      */
     public function definition()
     {
-        $base = $this->faker->unique()->word;
+        $base = $this->faker->unique()->word();
         return [
             'key'  => "key-{$base}",
             'name' => "name-{$base}",
