@@ -10,6 +10,7 @@ use App\Domain\Name\NameIdea;
 use App\Domain\Name\NameIdeaValidatorFactory;
 use App\Domain\UseCaseResult;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class SubmitNameUseCase
 {
@@ -22,7 +23,8 @@ class SubmitNameUseCase
     {
         $validator = NameIdeaValidatorFactory::fromApiInput($name, $types, $characters);
         if ($validator->fails()) {
-            return new UseCaseResult(false, [], $validator->errors());
+            Log::debug($validator->failed());
+            return new UseCaseResult(false, [], $validator->failed());
         }
 
         /** @var NameIdea $nameIdea */

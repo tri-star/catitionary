@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Name;
 
+use App\Rule\Cat\CatTypeRule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Support\Facades\Validator as ValidatorFacade;
 
@@ -12,7 +13,7 @@ use Illuminate\Support\Facades\Validator as ValidatorFacade;
  */
 class NameIdeaValidatorFactory
 {
-    public static function fromApiInput(string $name, array $types, array $characters): Validator
+    public static function fromApiInput(?string $name, ?array $types, ?array $characters): Validator
     {
         return ValidatorFacade::make([
             'name'       => $name,
@@ -20,7 +21,10 @@ class NameIdeaValidatorFactory
             'characters' => $characters,
         ], [
             'name'       => 'required',
-            'types'      => 'array',
+            'types'      => [
+                'array',
+                new CatTypeRule(),
+            ],
             'characters' => 'array',
         ]);
     }
