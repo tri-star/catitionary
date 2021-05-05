@@ -24,7 +24,6 @@ class SubmitNameUseCase
     {
         $validator = NameIdeaValidatorFactory::fromApiInput($name, $types, $characters);
         if ($validator->fails()) {
-            Log::debug($validator->failed());
             return new UseCaseResult(false, [], ValidationResult::fromValidator($validator));
         }
 
