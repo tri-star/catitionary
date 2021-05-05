@@ -20,7 +20,10 @@ class SubmitNameAction extends Controller
         );
 
         if (!$result->success) {
-            new JsonResponse([], 400);
+            return new JsonResponse(
+                JsonResponse::formatError($result->validationResult->getErrors()),
+                400
+            );
         }
         return new JsonResponse([]);
     }

@@ -6,6 +6,7 @@ namespace Tests\Feature\Http\Controllers\Api\Name;
 
 use App\Domain\CatCharacterics;
 use App\Domain\CatType;
+use App\Validation\ValidationErrorItem;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -28,5 +29,29 @@ class SubmitNameActionTest extends TestCase
             ],
         ])
         ->assertStatus(200);
+    }
+
+
+    public function test__バリデーションエラー()
+    {
+        $catType = CatType::factory()->create();
+        $catCharacterics = CatCharacterics::factory()->create();
+
+        $this->postJson('/api/names', [
+            'name'       => 'test',
+            'types'      => [
+                'unknown',
+            ],
+            'characters' => [
+                $catCharacterics->key,
+            ],
+        ])
+        ->assertStatus(400)
+        ->assertJson([
+            [
+                'field' => 'types',
+                'code'  => ValidationErrorItem::CODE_INVALID,
+            ],
+        ]);
     }
 }
