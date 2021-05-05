@@ -16,4 +16,23 @@ class JsonResponse extends BaseJsonResponse
     {
         parent::__construct($data, $status, $headers, $options);
     }
+
+
+    /**
+     * エラー情報をAPIレスポンス用に整形して返す
+     */
+    public static function formatError(array $errors): array
+    {
+        $results = [];
+
+        foreach ($errors as $fieldName=>$errorCodes) {
+            foreach ($errorCodes as $errorCode) {
+                $results[] = [
+                    'field' => $fieldName,
+                    'code'  => $errorCode,
+                ];
+            }
+        }
+        return $results;
+    }
 }

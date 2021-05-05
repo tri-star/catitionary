@@ -48,4 +48,24 @@ class ValidationErrorConverterTest extends TestCase
             ],
         ];
     }
+
+
+    public function test__未定義のルール名はfallbackで指定した名前に変換されること()
+    {
+        $input = [
+            'name' => [
+                'Unknown' => [],
+            ],
+        ];
+
+        $fallbackRuleName = 'fallbackRuleName';
+        $expected = [
+            'name' => [
+                $fallbackRuleName,
+            ],
+        ];
+
+        $result = $this->converter->convert($input, [], $fallbackRuleName);
+        $this->assertEquals($expected, $result);
+    }
 }

@@ -74,7 +74,7 @@ class SubmitNameUseCaseTest extends TestCase
             Arr::get($parameters, 'characters'),
         );
 
-        $this->assertEquals($expectedError, $result->errors);
+        $this->assertEquals($expectedError, $result->validationResult->getErrors());
     }
 
 
@@ -87,10 +87,7 @@ class SubmitNameUseCaseTest extends TestCase
                     'characters' => ['hachiware'],
                 ],
                 'expected_errors' => [
-                    [
-                        'field' => 'name',
-                        'code'  => ValidationErrorItem::CODE_MISSING,
-                    ],
+                    'name' => [ValidationErrorItem::CODE_MISSING],
                 ],
             ],
             // 'cat_type' => [
@@ -121,7 +118,7 @@ class SubmitNameUseCaseTest extends TestCase
             Arr::get($parameters, 'characters'),
         );
 
-        $this->assertEquals($expectedError, $result->errors);
+        $this->assertEquals($expectedError, $result->validationResult->getErrors());
     }
 
 
@@ -134,7 +131,9 @@ class SubmitNameUseCaseTest extends TestCase
                     'types'      => ['unknown'],
                     'characters' => ['hachiware'],
                 ],
-                'expected_errors' => '',
+                'expected_errors' => [
+                    'types'  => [ValidationErrorItem::CODE_INVALID,],
+                ],
             ],
         ];
     }

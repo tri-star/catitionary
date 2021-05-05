@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Validation;
 
+use App\Rule\Cat\CatTypeRule;
+
 /**
  * LaravelのValidatorが返すエラー情報を
  * アプリケーション用のエラー情報の構造に変換する
@@ -15,7 +17,8 @@ class ValidationErrorConverter
      * @var array
      */
     private $baseTypeMap = [
-        'Required' => 'missing',
+        'Required'         => 'missing',
+        CatTypeRule::class => 'invalid',
     ];
 
 
