@@ -6,6 +6,7 @@ namespace Tests\Unit\UseCase\Name;
 
 use App\Domain\CatCharacterics;
 use App\Domain\CatType;
+use App\Domain\Name\NameIdea;
 use App\UseCases\Name\SubmitNameUseCase;
 use App\Validation\ValidationErrorItem;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -90,23 +91,16 @@ class SubmitNameUseCaseTest extends TestCase
                     'name' => [ValidationErrorItem::CODE_MISSING],
                 ],
             ],
-            // 'cat_type' => [
-            //     'parameter' => [
-            //         'name'       => 'test',
-            //         'characters' => ['hachiware'],
-            //     ],
-            //     'expected_message' => '',
-            // ],
         ];
     }
 
 
     /**
-     * @dataProvider forTest__登録失敗__不正なコード
+     * @dataProvider forTest__登録失敗__各種エラー
      */
-    public function test__登録失敗__不正なコード($parameters, $expectedError)
+    public function test__登録失敗__各種エラー($parameters, $expectedError)
     {
-        CatType::factory()->create([
+        $catType = CatType::factory()->create([
             'key' => 'kijitora',
         ]);
         CatCharacterics::factory()->create([
@@ -122,13 +116,43 @@ class SubmitNameUseCaseTest extends TestCase
     }
 
 
-    public function forTest__登録失敗__不正なコード()
+    public function forTest__登録失敗__各種エラー()
     {
         return [
-            'cat_type' => [
+            'name__最大文字数超過' => [
+                'parameter' => [
+                    'name'       => str_repeat('a', NameIdea::NAME_MAX_LENGTH + 1),
+                    'types'      => ['kijitora'],
+                    'characters' => ['hachiware'],
+                ],
+                'expected_errors' => [
+                    'name'  => [ValidationErrorItem::CODE_OUT_OF_RANGE,],
+                ],
+            ],
+            'name__0文字' => [
+                'parameter' => [
+                    'name'       => '',
+                    'types'      => ['kijitora'],
+                    'characters' => ['hachiware'],
+                ],
+                'expected_errors' => [
+                    'name'  => [ValidationErrorItem::CODE_MISSING,],
+                ],
+            ],
+            'cat_type__不正なコード' => [
                 'parameter' => [
                     'name'       => 'test',
                     'types'      => ['unknown'],
+                    'characters' => ['hachiware'],
+                ],
+                'expected_errors' => [
+                    'types'  => [ValidationErrorItem::CODE_INVALID,],
+                ],
+            ],
+            'cat_type__配列以外' => [
+                'parameter' => [
+                    'name'       => 'test',
+                    'types'      => 'string_value',
                     'characters' => ['hachiware'],
                 ],
                 'expected_errors' => [

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Name;
 
+use App\Rule\Cat\CatCharactericsRule;
 use App\Rule\Cat\CatTypeRule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Support\Facades\Validator as ValidatorFacade;
@@ -13,19 +14,24 @@ use Illuminate\Support\Facades\Validator as ValidatorFacade;
  */
 class NameIdeaValidatorFactory
 {
-    public static function fromApiInput(?string $name, ?array $types, ?array $characters): Validator
+    public static function fromApiInput($name, $types, $characters): Validator
     {
+        $maxNameLength = NameIdea::NAME_MAX_LENGTH;
+
         return ValidatorFacade::make([
             'name'       => $name,
             'types'      => $types,
             'characters' => $characters,
         ], [
-            'name'       => 'required',
+            'name'       => "required|max:{$maxNameLength}",
             'types'      => [
                 'array',
                 new CatTypeRule(),
             ],
-            'characters' => 'array',
+            'characters' => [
+                'array',
+                new CatCharactericsRule(),
+            ],
         ]);
     }
 }

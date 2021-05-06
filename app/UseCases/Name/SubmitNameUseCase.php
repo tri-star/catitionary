@@ -20,7 +20,7 @@ class SubmitNameUseCase
      * @var string[]|null $ypes
      * @var string[]|null $characters
      */
-    public function execute(?string $name, ?array $types, ?array $characters)
+    public function execute($name, $types, $characters)
     {
         $validator = NameIdeaValidatorFactory::fromApiInput($name, $types, $characters);
         if ($validator->fails()) {

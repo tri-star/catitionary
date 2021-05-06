@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Validation;
 
+use App\Rule\Cat\CatCharactericsRule;
 use App\Rule\Cat\CatTypeRule;
 
 /**
@@ -17,8 +18,11 @@ class ValidationErrorConverter
      * @var array
      */
     private $baseTypeMap = [
-        'Required'         => 'missing',
-        CatTypeRule::class => 'invalid',
+        'Array'                    => ValidationErrorItem::CODE_INVALID,
+        'Max'                      => ValidationErrorItem::CODE_OUT_OF_RANGE,
+        'Required'                 => ValidationErrorItem::CODE_MISSING,
+        CatTypeRule::class         => ValidationErrorItem::CODE_INVALID,
+        CatCharactericsRule::class => ValidationErrorItem::CODE_INVALID,
     ];
 
 
@@ -40,6 +44,7 @@ class ValidationErrorConverter
                 }
                 $result[$field][] = $typeMap[$ruleName] ?? $fallbackName;
             }
+            $result[$field] = array_unique($result[$field]);
         }
         return $result;
     }
