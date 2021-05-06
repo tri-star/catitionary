@@ -14,10 +14,11 @@ class CreateCatTypesTable extends Migration
     public function up()
     {
         Schema::create('cat_types', function (Blueprint $table) {
-            $table->string('id', 50)->primary();
+            $table->id();
+            $table->string('key', 50);
             $table->string('name', 50);
             $table->timestamps();
-            $table->index(['name']);
+            $table->index(['key']);
         });
     }
 

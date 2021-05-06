@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Cat\CatCharactericsAction;
 use App\Http\Controllers\Api\Cat\CatTypesAction;
+use App\Http\Controllers\Api\Name\SubmitNameAction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,3 +25,5 @@ Route::prefix('/cat')->group(function () {
     Route::get('/types', [CatTypesAction::class, 'invoke']);
     Route::get('/characterics', [CatCharactericsAction::class, 'invoke']);
 });
+
+Route::post('/names', [SubmitNameAction::class, 'invoke']);

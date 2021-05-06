@@ -14,9 +14,11 @@ class CreateCatCharacterics extends Migration
     public function up()
     {
         Schema::create('cat_characterics', function (Blueprint $table) {
-            $table->string('id', 50)->primary();
+            $table->id();
+            $table->string('key', 50);
             $table->string('name');
             $table->timestamps();
+            $table->index(['key']);
         });
     }
 

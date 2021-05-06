@@ -1,18 +1,18 @@
 <?php
 
-namespace Database\Factories\Domain;
+namespace Database\Factories\Domain\Name;
 
-use App\Domain\CatCharacterics;
+use App\Domain\Name\NameIdea;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class CatCharactericsFactory extends Factory
+class NameIdeaFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = CatCharacterics::class;
+    protected $model = NameIdea::class;
 
     /**
      * Define the model's default state.
@@ -21,10 +21,8 @@ class CatCharactericsFactory extends Factory
      */
     public function definition()
     {
-        $base = $this->faker->unique()->word();
         return [
-            'key'  => "character-key-{$base}",
-            'name' => "character-name-{$base}",
+            'name' => $this->faker->firstName(),
         ];
     }
 }

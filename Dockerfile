@@ -43,6 +43,9 @@ RUN apt update && \
 
 RUN docker-php-ext-install pdo_mysql
 RUN docker-php-ext-install zip
+RUN docker-php-ext-install opcache
+
+COPY ./docker/app/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 
 RUN curl -L https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
 
@@ -95,5 +98,6 @@ RUN pecl install xdebug && \
   docker-php-ext-enable xdebug
 
 COPY docker/app/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
+COPY docker/app/opcache_local.ini /usr/local/etc/php/conf.d/opcache.ini
 
 USER app_user

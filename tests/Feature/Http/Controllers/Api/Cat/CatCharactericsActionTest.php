@@ -19,7 +19,7 @@ class CatCharactericsActionTest extends TestCase
         $expectedResponse = [];
         foreach (CatCharacterics::all() as $characterics) {
             $expectedResponse[] = [
-                'id'   => $characterics->id,
+                'id'   => $characterics->key,
                 'name' => $characterics->name,
             ];
         }

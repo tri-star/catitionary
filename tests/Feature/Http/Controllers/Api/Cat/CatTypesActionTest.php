@@ -20,7 +20,7 @@ class CatTypesActionTest extends TestCase
         $expectedResponse = [];
         foreach ($catTypes as $catType) {
             $expectedResponse[] = [
-                'id'   => $catType->id,
+                'id'   => $catType->key,
                 'name' => $catType->name,
             ];
         }
