@@ -4,49 +4,49 @@ declare(strict_types=1);
 
 namespace App\UseCases\Name;
 
-use App\Domain\CatCharacterics;
-use App\Domain\CatType;
-use App\Domain\Name\NameIdea;
-use App\Domain\Name\NameIdeaValidatorFactory;
 use App\Domain\UseCaseResult;
 use App\Validation\ValidationResult;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
+/**
+ * 名前案を一括登録する
+ */
 class SubmitNameUseCase
 {
     /**
-     * @var string|null $name
-     * @var string[]|null $ypes
-     * @var string[]|null $characters
+     * @var array|null $nameIdeas
      */
-    public function execute($name, $types, $characters)
+    public function execute($nameIdeas)
     {
-        $validator = NameIdeaValidatorFactory::fromApiInput($name, $types, $characters);
-        if ($validator->fails()) {
-            return new UseCaseResult(false, [], ValidationResult::fromValidator($validator));
+        if (!is_array($nameIdeas)) {
+            return new UseCaseResult(
+                false,
+                [],
+                new ValidationResult(false)
+            );
         }
 
-        /** @var NameIdea $nameIdea */
-        $nameIdea = null;
-        DB::transaction(function () use (&$nameIdea, $name, $types, $characters) {
-            $catTypes = CatType::whereIn('key', $types)->get();
-            $catCharacters = CatCharacterics::whereIn('key', $characters)->get();
-
-            $nameIdea = NameIdea::create([
-                'name' => $name,
-            ]);
-
-            foreach ($catTypes as $catType) {
-                $nameIdea->catTypes()->attach($catType->id);
+        $transactionResult = DB::transaction(function () use ($nameIdeas) {
+            $subUseCase = new SubmitNameSubUseCase();
+            foreach ($nameIdeas as $nameIdea) {
+                $result = $subUseCase->execute(
+                    Arr::get($nameIdea, 'name'),
+                    Arr::get($nameIdea, 'types'),
+                    Arr::get($nameIdea, 'characters')
+                );
+                if (!$result->success) {
+                    return new UseCaseResult(
+                        false,
+                        [],
+                        new ValidationResult(false)
+                    );
+                }
             }
-            foreach ($catCharacters as $catCharacter) {
-                $nameIdea->catCharacterics()->attach($catCharacter->id);
-            }
+
+            return new UseCaseResult(true);
         });
 
-        return new UseCaseResult(true, [
-            'id' => $nameIdea->id,
-        ]);
+        return $transactionResult;
     }
 }

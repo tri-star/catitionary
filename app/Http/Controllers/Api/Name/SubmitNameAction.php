@@ -14,9 +14,7 @@ class SubmitNameAction extends Controller
     public function invoke(SubmitNameUseCase $useCase, Request $request)
     {
         $result = $useCase->execute(
-            $request->json('name'),
-            $request->json('types'),
-            $request->json('characters'),
+            $request->json()->all()
         );
 
         if (!$result->success) {
