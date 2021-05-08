@@ -50,7 +50,7 @@ paths:
               example:
                 - '大吉'
     post:
-      summary: 名前提案
+      summary: 名前案提出
       description: 名前の案を提出する
       operationId: 'submitNames'
       tags:
@@ -70,7 +70,7 @@ paths:
 
   /names/patterns:
     post:
-      summary: 名前パターン提案
+      summary: 名前パターン提出
       description: 名前のパターンを提出する
       operationId: 'submitNamePatterns'
       tags:
@@ -206,9 +206,6 @@ components:
       type: object
       description: 'バリデーションエラー1件分を表すオブジェクト'
       properties:
-        field:
-          type: string
-          example: 'name'
         code:
           $ref: '#/components/schemas/ValidationErrorCode'
     ValidationErrorCode:
