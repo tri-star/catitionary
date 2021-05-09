@@ -33,6 +33,7 @@
     "url-loader": "^4.1.1",
     "vue-jest": "^4.0.1",
     "vue-template-compiler": "^2.6.11",
+    "webpack": "^5.36.2",
     "webpack-cli": "^4.6.0"
   }
 }
