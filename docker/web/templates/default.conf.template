@@ -5,7 +5,11 @@ server {
   index index.html;
 
   location / {
-    try_files $uri $uri/index.html @app;
+    try_files $uri $uri/index.html /index.html;
+  }
+
+  location /api {
+    try_files @app;
   }
 
   location @app {
