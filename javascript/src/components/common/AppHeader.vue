@@ -1,6 +1,6 @@
 <template>
   <header>
-    <span class="logo">Catitionary</span>
+    <span class="text-primary-dark text-3xl">Catitionary</span>
   </header>
 </template>
 
@@ -13,3 +13,5 @@ export default defineComponent({
   },
 })
 </script>
+
+<style scoped></style>
