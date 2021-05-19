@@ -22,7 +22,7 @@ class CatCharactericsSeeder extends Seeder
 
         foreach ($types as $id=>$name) {
             $characterics = new CatCharacterics([
-                'id'   => $id,
+                'key'  => $id,
                 'name' => $name,
             ]);
             $characterics->save();
