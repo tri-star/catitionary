@@ -82,6 +82,9 @@ module.exports = (env = {}) => ({
       },
     },
   },
+  watchOptions: {
+    ignored: /node_modules/,
+  },
   devServer: {
     inline: true,
     hot: true,

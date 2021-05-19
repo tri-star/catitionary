@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "webpack-dev-server --host 0.0.0.0",
+    "watch": "webpack watch",
     "build": "NODE_ENV=production webpack",
     "build-dev": "webpack",
     "lint": "eslint",
