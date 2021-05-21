@@ -26,12 +26,12 @@
 </template>
 
 <script>
-import { defineComponent, ref } from '@vue/composition-api'
+import { ref } from '@vue/composition-api'
 import DropDown from '@/components/common/DropDown'
 import DropDownItem from '@/components/common/DropDownItem'
 import DropDownItemSeparator from '@/components/common/DropDownItemSeparator'
 
-export default defineComponent({
+export default {
   components: {
     DropDown,
     DropDownItem,
@@ -57,7 +57,7 @@ export default defineComponent({
       onMenuClicked,
     }
   },
-})
+}
 </script>
 
 <style scoped></style>
