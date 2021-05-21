@@ -3,7 +3,7 @@
     <div class="container mx-auto">
       <AppHeader />
     </div>
-    <main>
+    <main class="container mx-auto">
       <slot />
     </main>
   </div>

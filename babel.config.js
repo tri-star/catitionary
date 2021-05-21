@@ -9,5 +9,6 @@ module.exports = {
         path: './.env',
       },
     ],
+    ['@babel/plugin-transform-runtime', { corejs: 3 }],
   ],
 }
