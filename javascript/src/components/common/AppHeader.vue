@@ -1,7 +1,7 @@
 <template>
-  <header class="flex bg-third p-4">
-    <span class="text-primary text-3xl">Catitionary</span>
-    <div class="items-end flex-grow text-right">
+  <header class="flex bg-third p-4 items-end">
+    <span class="text-primary text-3xl flex-grow">Catitionary</span>
+    <div>
       <a id="account" @click="onIconClicked">
         <span class="text-white material-icons cursor-pointer"
           >account_circle</span
