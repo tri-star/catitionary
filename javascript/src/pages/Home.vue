@@ -1,34 +1,51 @@
 <template>
   <DefaultLayout>
     <div>
-      <CardItem>
-        <div class="flex">
-          <span class="self">種類</span>
-          <select>
-            <option>テスト</option>
-          </select>
-        </div>
-      </CardItem>
-      <CardItem>
-        <div class="flex">
-          <span class="self">特徴</span>
-          <select>
-            <option>テスト</option>
-          </select>
-        </div>
-      </CardItem>
+      <FormRowList>
+        <CardItem>
+          <LabeledFormRow label-width="w-20" label="種類">
+            <template v-slot:form>
+              <select>
+                <option>テスト</option>
+              </select>
+            </template>
+          </LabeledFormRow>
+        </CardItem>
+        <CardItem>
+          <LabeledFormRow label-width="w-20" label="特徴">
+            <template v-slot:form>
+              <select>
+                <option>テスト</option>
+              </select>
+            </template>
+          </LabeledFormRow>
+        </CardItem>
+        <CardItem>
+          <FormRow class="justify-center"
+            ><SimpleButton title="送信"
+          /></FormRow>
+        </CardItem>
+      </FormRowList>
     </div>
   </DefaultLayout>
 </template>
 
 <script>
-import DefaultLayout from '@/layouts/DefaultLayout'
 import CardItem from '@/components/common/CardItem'
+import DefaultLayout from '@/layouts/DefaultLayout'
+import FormRowList from '@/components/common/form/FormRowList'
+import FormRow from '@/components/common/form/FormRow'
+import LabeledFormRow from '@/components/common/form/LabeledFormRow'
+import SimpleButton from '@/components/common/button/SimpleButton'
 
 export default {
   components: {
     DefaultLayout,
     CardItem,
+    LabeledFormRow,
+    FormRow,
+    FormRowList,
+    SimpleButton,
   },
   setup() {},
 }
