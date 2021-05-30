@@ -1,7 +1,7 @@
 <template>
-  <header class="flex bg-third p-4">
-    <span class="text-primary text-3xl">Catitionary</span>
-    <div class="items-end flex-grow text-right">
+  <header class="flex bg-third p-4 items-end">
+    <span class="text-primary text-3xl flex-grow">Catitionary</span>
+    <div>
       <a id="account" @click="onIconClicked">
         <span class="text-white material-icons cursor-pointer"
           >account_circle</span
@@ -26,12 +26,12 @@
 </template>
 
 <script>
-import { ref } from '@vue/composition-api'
-import DropDown from '@/components/common/DropDown'
-import DropDownItem from '@/components/common/DropDownItem'
-import DropDownItemSeparator from '@/components/common/DropDownItemSeparator'
+import { defineComponent, ref } from '@vue/composition-api'
+import DropDown from '@/components/common/dropDown/DropDown'
+import DropDownItem from '@/components/common/dropDown/DropDownItem'
+import DropDownItemSeparator from '@/components/common/dropDown/DropDownItemSeparator'
 
-export default {
+export default defineComponent({
   components: {
     DropDown,
     DropDownItem,
@@ -57,7 +57,7 @@ export default {
       onMenuClicked,
     }
   },
-}
+})
 </script>
 
 <style scoped></style>
