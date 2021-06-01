@@ -1,0 +1,256 @@
+openapi: 3.0.0
+info:
+  description: 猫の名前の自動生成を支援するCatitionaryのAPI
+  title: Catitionary API
+  version: 0.1.0
+servers:
+- description: ローカル環境
+  url: http://127.0.0.1:9001/api
+- description: PRISM
+  url: http://127.0.0.1:4010
+tags:
+- description: 名前関連
+  name: names
+- description: 種類関連
+  name: types
+paths:
+  /names:
+    get:
+      description: 指定されたパターンに合致する名前の一覧を返す
+      operationId: getNames
+      parameters:
+      - description: 猫の種類
+        in: query
+        name: cat_type
+        schema:
+          $ref: '#/components/schemas/CatType'
+      - description: 特徴(長毛、どっしりなど)
+        in: query
+        name: character
+        schema:
+          $ref: '#/components/schemas/CharactericsTypeId'
+      - description: 名前のタイプ(和風、洋風)
+        in: query
+        name: name_type
+        schema:
+          $ref: '#/components/schemas/NameType'
+      - description: 件数
+        in: query
+        name: count
+        schema:
+          default: 1
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+              - 大吉
+              schema:
+                items:
+                  type: string
+                type: array
+          description: パターンに合致した名前
+      summary: 名前取得
+      tags:
+      - names
+    post:
+      description: 名前の案を提出する
+      operationId: submitNames
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                $ref: '#/components/schemas/NameIdea'
+              type: array
+      responses:
+        "200":
+          description: 成功
+        "400":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ValidationErrorItem'
+                type: array
+          description: バリデーションエラー
+      summary: 名前案提出
+      tags:
+      - names
+  /names/patterns:
+    post:
+      description: 名前のパターンを提出する
+      operationId: submitNamePatterns
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                $ref: '#/components/schemas/NamePatternIdea'
+              type: array
+      responses:
+        "200":
+          description: 成功
+        "400":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ValidationErrorItem'
+                type: array
+          description: バリデーションエラー
+      summary: 名前パターン提出
+      tags:
+      - names
+  /cat/types:
+    get:
+      description: 猫の種類の一覧を返す
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+              - id: kijitora
+                name: キジトラ
+              - id: kijishiro
+                name: キジシロ
+              - id: hachiware
+                name: ハチワレ
+              schema:
+                items:
+                  $ref: '#/components/schemas/CatType'
+                type: array
+          description: 猫の種類の一覧
+      summary: 猫の種類一覧
+      tags:
+      - types
+  /cat/characterics:
+    get:
+      description: 猫の特徴の一覧を返す
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+              - id: long-hair
+                name: 長毛
+              - id: massive
+                name: どっしり
+              - id: kinked-tail
+                name: カギしっぽ
+              schema:
+                items:
+                  $ref: '#/components/schemas/CharactericsType'
+                type: array
+          description: 猫の特徴の一覧
+      summary: 猫の特徴一覧
+      tags:
+      - types
+components:
+  schemas:
+    CatType:
+      description: 猫の種類
+      example:
+        name: name
+        id: kijitora
+      properties:
+        id:
+          description: 猫の種類のID
+          example: kijitora
+          type: string
+        name:
+          type: string
+      type: object
+    CharactericsTypeId:
+      description: 猫の特徴ID
+      example: long-hair
+      type: string
+    NameType:
+      enum:
+      - japanese
+      - western
+      type: string
+    NameIdea:
+      description: 名前の案
+      example:
+        characters:
+        - long-hair
+        - long-hair
+        types:
+        - kijitora
+        - kijitora
+        name: name
+      properties:
+        name:
+          type: string
+        types:
+          items:
+            $ref: '#/components/schemas/CatTypeId'
+          type: array
+        characters:
+          items:
+            $ref: '#/components/schemas/CharactericsTypeId'
+          type: array
+      type: object
+    ValidationErrorItem:
+      description: バリデーションエラー1件分を表すオブジェクト
+      properties:
+        code:
+          $ref: '#/components/schemas/ValidationErrorCode'
+      type: object
+    NamePatternIdea:
+      description: 名前パターンの案
+      example:
+        character: long-hair
+        pattern: pattern
+        type: kijitora
+      properties:
+        pattern:
+          type: string
+        pattern_type:
+          $ref: '#/components/schemas/NamePatternType'
+        type:
+          description: 猫の種類のID
+          example: kijitora
+          type: string
+        character:
+          description: 猫の特徴ID
+          example: long-hair
+          type: string
+      type: object
+    CharactericsType:
+      description: 猫の特徴
+      example:
+        name: name
+        id: long-hair
+      properties:
+        id:
+          description: 猫の特徴ID
+          example: long-hair
+          type: string
+        name:
+          type: string
+      type: object
+    CatTypeId:
+      description: 猫の種類のID
+      example: kijitora
+      type: string
+    ValidationErrorCode:
+      description: バリデーションエラーの種類
+      enum:
+      - missing
+      - resource_not_found
+      - invalid_format
+      - already_exists
+      - out_of_range
+      type: string
+    NamePatternType:
+      description: |
+        名前パターンのタイプ
+        * prefix: 接頭辞
+        * suffix: 接尾辞
+      enum:
+      - suffix
+      - prefix
+      type: string

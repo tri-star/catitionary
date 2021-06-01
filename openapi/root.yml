@@ -10,13 +10,13 @@ servers:
     description: 'PRISM'
 paths:
   /names:
-    $ref: '../paths/names/index.yml'
+    $ref: './paths/names/index.yml'
   /names/patterns:
-    $ref: '../paths/names/patterns.yml'
+    $ref: './paths/names/patterns.yml'
   /cat/types:
-    $ref: '../paths/cat/types.yml'
+    $ref: './paths/cat/types.yml'
   /cat/characterics:
-    $ref: '../paths/cat/characterics.yml'
+    $ref: './paths/cat/characterics.yml'
 
 # /name/series -> シリーズを指定してその中から名前を返す()
 
