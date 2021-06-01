@@ -1,0 +1,21 @@
+get:
+  summary: 猫の種類一覧
+  description: 猫の種類の一覧を返す
+  tags:
+    - types
+  responses:
+    '200':
+      description: '猫の種類の一覧'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '../../components/schemas/CatType.yml'
+          example:
+            - id: 'kijitora'
+              name: 'キジトラ'
+            - id: 'kijishiro'
+              name: 'キジシロ'
+            - id: 'hachiware'
+              name: 'ハチワレ'

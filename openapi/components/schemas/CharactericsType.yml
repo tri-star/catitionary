@@ -1,0 +1,7 @@
+type: object
+description: 猫の特徴
+properties:
+  id:
+    $ref: 'CharactericsTypeId.yml'
+  name:
+    type: string

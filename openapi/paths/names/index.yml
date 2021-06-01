@@ -1,0 +1,57 @@
+get:
+  summary: 名前取得
+  description: 指定されたパターンに合致する名前の一覧を返す
+  operationId: 'getNames'
+  tags:
+    - names
+  parameters:
+    - name: cat_type
+      in: query
+      description: 猫の種類
+      schema:
+        $ref: '../../components/schemas/CatType.yml'
+    - name: character
+      in: query
+      description: 特徴(長毛、どっしりなど)
+      schema:
+        $ref: '../../components/schemas/CharactericsTypeId.yml'
+    - name: name_type
+      in: query
+      description: 名前のタイプ(和風、洋風)
+      schema:
+        $ref: '../../components/schemas/NameType.yml'
+    - name: count
+      in: query
+      description: 件数
+      schema:
+        type: integer
+        default: 1
+  responses:
+    '200':
+      description: パターンに合致した名前
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: string
+          example:
+            - '大吉'
+post:
+  summary: 名前案提出
+  description: 名前の案を提出する
+  operationId: 'submitNames'
+  tags:
+    - names
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: '../../components/schemas/NameIdea.yml'
+  responses:
+    '200':
+      description: 成功
+    '400':
+      $ref: '../../components/responses/ValidationError.yml'

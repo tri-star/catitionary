@@ -1,0 +1,5 @@
+type: object
+description: 'バリデーションエラー1件分を表すオブジェクト'
+properties:
+  code:
+    $ref: 'ValidationErrorCode.yml'

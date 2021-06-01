@@ -1,0 +1,18 @@
+post:
+  summary: 名前パターン提出
+  description: 名前のパターンを提出する
+  operationId: 'submitNamePatterns'
+  tags:
+    - names
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: array
+          items:
+            $ref: '../../components/schemas/NamePatternIdea.yml'
+  responses:
+    '200':
+      description: 成功
+    '400':
+      $ref: '../../components/responses/ValidationError.yml'
