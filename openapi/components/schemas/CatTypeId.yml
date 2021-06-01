@@ -1,0 +1,3 @@
+type: string
+description: 猫の種類のID
+example: 'kijitora'

@@ -1,0 +1,7 @@
+description: 'バリデーションエラー'
+content:
+  application/json:
+    schema:
+      type: array
+      items:
+        $ref: '../schemas/ValidationErrorItem.yml'

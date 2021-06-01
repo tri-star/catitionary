@@ -1,0 +1,8 @@
+type: string
+description: 'バリデーションエラーの種類'
+enum:
+  - 'missing'
+  - 'resource_not_found'
+  - 'invalid_format'
+  - 'already_exists'
+  - 'out_of_range'

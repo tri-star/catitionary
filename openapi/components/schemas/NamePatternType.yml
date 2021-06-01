@@ -1,0 +1,8 @@
+type: string
+description: |
+  名前パターンのタイプ
+  * prefix: 接頭辞
+  * suffix: 接尾辞
+enum:
+  - 'suffix'
+  - 'prefix'

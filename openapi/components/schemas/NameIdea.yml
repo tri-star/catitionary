@@ -1,0 +1,13 @@
+type: object
+description: '名前の案'
+properties:
+  name:
+    type: string
+  types:
+    type: array
+    items:
+      $ref: './CatTypeId.yml'
+  characters:
+    type: array
+    items:
+      $ref: './CharactericsTypeId.yml'

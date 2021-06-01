@@ -1,0 +1,11 @@
+type: object
+description: '名前パターンの案'
+properties:
+  pattern:
+    type: string
+  pattern_type:
+    $ref: './NamePatternType.yml'
+  type:
+    $ref: './CatTypeId.yml'
+  character:
+    $ref: './CharactericsTypeId.yml'

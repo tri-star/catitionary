@@ -1,0 +1,7 @@
+type: object
+description: 猫の種類
+properties:
+  id:
+    $ref: 'CatTypeId.yml'
+  name:
+    type: string

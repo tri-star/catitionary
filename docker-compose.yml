@@ -30,7 +30,7 @@ services:
   prism:
     image: stoplight/prism:4
     init: true
-    command: 'mock -h 0.0.0.0 /tmp/swagger/swagger.yml'
+    command: 'mock -h 0.0.0.0 /tmp/openapi/specs/openapi/openapi.yaml'
     volumes:
       - '${PWD}:/tmp'
     ports:
@@ -69,20 +69,11 @@ services:
   swagger:
     image: 'swaggerapi/swagger-ui:v3.46.0'
     environment:
-      API_URL: ./swagger/swagger.yml
+      API_URL: ./openapi/specs/openapi/openapi.yaml
     volumes:
-      - ./swagger:/usr/share/nginx/html/swagger
+      - ./openapi:/usr/share/nginx/html/openapi
     ports:
       - '${EXPOSE_SWAGGER_PORT:-8080}:8080'
-
-  swagger-editor:
-    image: 'swaggerapi/swagger-editor:v3.15.11'
-    environment:
-      URL: ./swagger/swagger.yml
-    volumes:
-      - './swagger:/usr/share/nginx/html/swagger'
-    ports:
-      - '${EXPOSE_SWAGGER_EDITOR_PORT:-8081}:8080'
 
 volumes:
   db:
