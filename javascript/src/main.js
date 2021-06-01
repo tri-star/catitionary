@@ -9,8 +9,11 @@ Vue.use(CompositionApi)
 
 Vue.config.productionTip = false
 
+const serviceProvider = new ServiceProvider()
+serviceProvider.register()
+
 new Vue({
   router,
-  provide: ServiceProvider.boot(),
+  provide: serviceProvider.boot(),
   render: (h) => h(App),
 }).$mount('#app')
