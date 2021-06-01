@@ -39,4 +39,9 @@ export class AuthHandler {
     const user = await this.userRepository.fetchUser(loginId)
     return user
   }
+
+  isLogined() {
+    const loginId = localStorage.getItem('loginId')
+    return loginId !== null
+  }
 }

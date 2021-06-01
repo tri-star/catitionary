@@ -8,28 +8,45 @@
         >
       </a>
       <DropDown :show.sync="showPopup" target="#account">
-        <DropDownItem
-          menu-id="profile"
-          title="プロフィール"
-          @click="onMenuClicked"
-        />
-        <DropDownItem menu-id="setting" title="設定" @click="onMenuClicked" />
-        <DropDownItemSeparator />
-        <DropDownItem
-          menu-id="logout"
-          title="ログアウト"
-          @click="onMenuClicked"
-        />
+        <template v-if="isGuest">
+          <DropDownItem
+            menu-id="login"
+            title="ログイン"
+            @click="onMenuClicked"
+          />
+          <DropDownItem
+            menu-id="signup"
+            title="会員登録"
+            @click="onMenuClicked"
+          />
+        </template>
+        <template v-else>
+          <DropDownItem
+            menu-id="profile"
+            title="プロフィール"
+            @click="onMenuClicked"
+          />
+          <DropDownItem menu-id="setting" title="設定" @click="onMenuClicked" />
+          <DropDownItemSeparator />
+          <DropDownItem
+            menu-id="logout"
+            title="ログアウト"
+            @click="onMenuClicked"
+          />
+        </template>
       </DropDown>
     </div>
   </header>
 </template>
 
 <script>
-import { defineComponent, ref } from '@vue/composition-api'
+import { defineComponent, ref, inject } from '@vue/composition-api'
+import { authHandlerKey } from '@/domain/user/authHandlerInterface'
 import DropDown from '@/components/common/dropDown/DropDown'
 import DropDownItem from '@/components/common/dropDown/DropDownItem'
 import DropDownItemSeparator from '@/components/common/dropDown/DropDownItemSeparator'
+import { useRouter } from '@/hooks/useRouter'
+import { routes } from '@/router/routes'
 
 export default defineComponent({
   components: {
@@ -38,13 +55,19 @@ export default defineComponent({
     DropDownItemSeparator,
   },
   setup() {
+    const authHandler = inject(authHandlerKey)
     const showPopup = ref(false)
+    const isGuest = !authHandler.isLogined()
+    const router = useRouter()
 
     const onIconClicked = () => {
       showPopup.value = !showPopup.value
     }
     const onMenuClicked = async (menuId) => {
       switch (menuId) {
+        case 'login':
+          router.push(routes.login)
+          break
         case 'logout':
           break
       }
@@ -52,6 +75,7 @@ export default defineComponent({
     }
 
     return {
+      isGuest,
       showPopup,
       onIconClicked,
       onMenuClicked,
