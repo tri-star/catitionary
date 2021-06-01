@@ -20,9 +20,9 @@
 </template>
 
 <script>
-import { ref, watch } from '@vue/composition-api'
+import { defineComponent, ref, watch } from '@vue/composition-api'
 
-export default {
+export default defineComponent({
   props: {
     show: {
       type: Boolean,
@@ -33,7 +33,6 @@ export default {
       default: null,
     },
   },
-  emits: ['update:show'],
   setup(props, context) {
     const container = ref(document.createElement('div'))
 
@@ -74,7 +73,7 @@ export default {
       onMaskMouseDown,
     }
   },
-}
+})
 </script>
 
 <style scoped>
