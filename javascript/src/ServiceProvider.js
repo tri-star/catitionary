@@ -17,7 +17,12 @@ export class ServiceProvider {
       },
       [authHandlerKey]: () => {
         const userRepository = this.get(userRepositoryKey)
-        return new AuthHandler(userRepository)
+        const axios = this.get('axios')
+        return new AuthHandler(userRepository, axios)
+      },
+      axios: () => {
+        axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
+        return axios
       },
     }
   }
