@@ -4,13 +4,13 @@
       <div class="container w-11/12 pt-3">
         <div class="w-6/12 mx-auto my-20">
           <h1 class="text-6xl w-full text-center mb-10">Catitionary</h1>
-          <FormRowList class="items-center">
-            <LabeledFormRow label="ログインID" label-width="w-20">
+          <FormRowList class="items-center mx-auto lg:w-1/2">
+            <LabeledFormRow label="ログインID" label-width="w-28">
               <template slot="form">
                 <TextInput v-model="state.form.loginId" class="w-full" />
               </template>
             </LabeledFormRow>
-            <LabeledFormRow label="パスワード" label-width="w-20">
+            <LabeledFormRow label="パスワード" label-width="w-28">
               <template slot="form">
                 <TextInput
                   v-model="state.form.password"

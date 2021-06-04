@@ -1,7 +1,13 @@
 <template>
   <input
     :type="type"
-    class="border border-gray-500 p-1"
+    :class="[
+      'border',
+      'border-gray-500',
+      'p-1',
+      'w-full',
+      isError ? 'text-red-900 border-red-800 bg-red-100' : '',
+    ]"
     :value="value"
     @input="$emit('input', $event.target.value)"
   />
@@ -19,6 +25,10 @@ export default defineComponent({
     type: {
       type: String,
       default: 'text',
+    },
+    isError: {
+      type: Boolean,
+      default: false,
     },
   },
   setup() {

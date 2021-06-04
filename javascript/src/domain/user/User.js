@@ -37,6 +37,10 @@ export class UserRegisterRuleCollection extends RuleCollection {
     super()
     this.userRepository = userRepository
     this.collection = {
+      email: {
+        required: constraints.required(),
+        length: constraints.maxLength(255),
+      },
       name: {
         required: constraints.required(),
         length: constraints.maxLength(15),
@@ -44,9 +48,16 @@ export class UserRegisterRuleCollection extends RuleCollection {
       loginId: {
         required: constraints.required(),
         length: constraints.maxLength(15),
-        uniqueLoginId: {
-          asyncRule: this.uniqueLoginId(),
-        },
+        // uniqueLoginId: {
+        //   asyncRule: this.uniqueLoginId(),
+        // },
+      },
+      password: {
+        required: constraints.required(),
+        length: constraints.betweenLength(8, 1000),
+      },
+      confirmPassword: {
+        same: constraints.same('password', 'パスワード'),
       },
     }
   }
