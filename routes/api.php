@@ -17,13 +17,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::prefix('/cat')->group(function () {
     Route::get('/types', [CatTypesAction::class, 'invoke']);
     Route::get('/characterics', [CatCharactericsAction::class, 'invoke']);
 });
 
 Route::post('/names', [SubmitNameAction::class, 'invoke']);
+
+Route::prefix('/internal')->group(function () {
+    Route::post('/auth/register', [\App\Http\Controllers\Api\Internal\Auth\RegisterAction::class, 'invoke']);
+});
