@@ -1,8 +1,9 @@
 // import { UserRepository, UserRepositoryKey } from './UserRepository'
 
 export class AuthHandler {
-  constructor(userRepository) {
+  constructor(userRepository, axios) {
     this.userRepository = userRepository
+    this.axios = axios
   }
 
   /**

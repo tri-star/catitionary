@@ -15,7 +15,7 @@
             @click="onMenuClicked"
           />
           <DropDownItem
-            menu-id="signup"
+            menu-id="register"
             title="会員登録"
             @click="onMenuClicked"
           />
@@ -66,7 +66,10 @@ export default defineComponent({
     const onMenuClicked = async (menuId) => {
       switch (menuId) {
         case 'login':
-          router.push(routes.login)
+          router.push({ name: routes.login })
+          break
+        case 'register':
+          router.push({ name: routes.authRegister })
           break
         case 'logout':
           break

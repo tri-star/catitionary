@@ -4,27 +4,9 @@ import { RuleCollection } from '@/lib/validator/Rule'
 export class User {
   constructor(params) {
     this.id = params?.id ?? 0
+    this.email = params?.email ?? ''
     this.loginId = params?.loginId ?? ''
-    this.name = params?.name ?? ''
-  }
-}
-
-export class UserRegisterRequest {
-  constructor(params) {
-    this.id = params?.id ?? 0
-    this.name = params?.name ?? 0
-    this.loginId = params?.loginId ?? 0
-  }
-
-  /**
-   * @returns {User}
-   */
-  toEntity() {
-    return new User({
-      id: this.id,
-      name: this.name,
-      loginId: this.loginId,
-    })
+    this.password = params?.password ?? ''
   }
 }
 
@@ -37,16 +19,23 @@ export class UserRegisterRuleCollection extends RuleCollection {
     super()
     this.userRepository = userRepository
     this.collection = {
-      name: {
+      email: {
         required: constraints.required(),
-        length: constraints.maxLength(15),
+        length: constraints.maxLength(255),
       },
       loginId: {
         required: constraints.required(),
         length: constraints.maxLength(15),
-        uniqueLoginId: {
-          asyncRule: this.uniqueLoginId(),
-        },
+        // uniqueLoginId: {
+        //   asyncRule: this.uniqueLoginId(),
+        // },
+      },
+      password: {
+        required: constraints.required(),
+        length: constraints.betweenLength(8, 1000),
+      },
+      confirmPassword: {
+        same: constraints.same('password', 'パスワード'),
       },
     }
   }

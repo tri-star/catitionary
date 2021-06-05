@@ -1,11 +1,11 @@
 <template>
-  <div class="flex flex-col sm:flex-row">
-    <div :class="['w-full', `sm:${labelWidth}`]">
+  <div class="flex flex-col sm:flex-row w-full">
+    <div :class="['w-full', `sm:${labelWidth}`, 'self-center']">
       <slot name="label">
         <p>{{ label }}</p>
       </slot>
     </div>
-    <div>
+    <div class="w-full">
       <slot name="form" />
     </div>
   </div>
