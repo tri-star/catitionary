@@ -144,7 +144,7 @@ export class UserRepository {
   async register(user) {
     const result = await this.axios.post(Endpoints.user.register, {
       email: user.email,
-      loginId: user.loginId,
+      login_id: user.loginId,
       password: user.password,
     })
     console.log(result)
