@@ -1,7 +1,12 @@
 import { User } from '@/domain/user/User'
 import { ResourceNotFoundError } from '@/lib/errors/ResourceNotFoundError'
+import { Endpoints } from '@/constants/Endpoints'
 
 export class UserRepository {
+  constructor(axios) {
+    this.axios = axios
+  }
+
   async fetchUser(loginId) {
     const users = this.loadUsers()
     const user = users.reduce((accumlator, u) => {
@@ -132,32 +137,17 @@ export class UserRepository {
     return filteredUsers
   }
 
-  async register(userData) {
-    await new Promise((resolve) =>
-      setTimeout(() => {
-        resolve()
-      }, 200)
-    )
-
-    let users = []
-    const usersJson = localStorage.getItem('users')
-    if (usersJson) {
-      users = JSON.parse(usersJson)
-    }
-    const maxId = users
-      .map((user) => {
-        return user.id ?? 0
-      })
-      .reduce((maxId, id) => {
-        return maxId < id ? id : maxId
-      })
-
-    users.push({
-      id: maxId + 1,
-      name: userData.name,
-      loginId: userData.loginId,
+  /**
+   * ユーザーの登録を行う
+   * @param {User} user
+   */
+  async register(user) {
+    const result = await this.axios.post(Endpoints.user.register, {
+      email: user.email,
+      loginId: user.loginId,
+      password: user.password,
     })
-    localStorage.setItem('users', JSON.stringify(users))
+    console.log(result)
   }
 
   async edit(id, userData) {

@@ -1,5 +1,9 @@
 <template>
   <DefaultLayout>
+    <AlertBox
+      :visible="state.showUserRegisteredMessage"
+      message="ユーザーを登録しました。"
+    ></AlertBox>
     <FormRowList class="items-center justify-center mx-auto lg:w-1/2">
       <LabeledFormRow label="メールアドレス" label-width="w-36">
         <template slot="form">
@@ -63,7 +67,7 @@
           :title="'登録'"
           class="mr-3"
           :disabled="isError"
-          @click="onRegisterClicked"
+          @onclick="onRegisterClicked"
         />
       </FormRow>
     </FormRowList>
@@ -72,6 +76,7 @@
 
 <script>
 import { defineComponent, computed, inject, watch } from '@vue/composition-api'
+import AlertBox from '@/components/common/alert/AlertBox'
 import DefaultLayout from '@/layouts/DefaultLayout'
 import FormError from '@/components/common/form/FormError'
 import FormRow from '@/components/common/form/FormRow'
@@ -84,6 +89,7 @@ import { RegisterPageStore } from './RegisterPageStore'
 
 export default defineComponent({
   components: {
+    AlertBox,
     DefaultLayout,
     FormError,
     FormRow,

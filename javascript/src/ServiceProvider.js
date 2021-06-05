@@ -13,7 +13,8 @@ export class ServiceProvider {
   register() {
     this.services = {
       [userRepositoryKey]: () => {
-        return new UserRepository()
+        const axios = this.get('axios')
+        return new UserRepository(axios)
       },
       [authHandlerKey]: () => {
         const userRepository = this.get(userRepositoryKey)

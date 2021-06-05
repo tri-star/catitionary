@@ -1,6 +1,8 @@
 import { reactive } from '@vue/composition-api'
+import { useApi } from '@/hooks/useApi'
 import { useValidator } from '@/hooks/useValidator'
 import { UserRegisterRuleCollection } from '@/domain/user/User'
+import { User } from '@/domain/user/User'
 
 export class RegisterPageStore {
   constructor(userRepository) {
@@ -9,6 +11,10 @@ export class RegisterPageStore {
     this.validator = useValidator()
     this.userRepository = userRepository
     this.ruleCollection = new UserRegisterRuleCollection(null)
+    this.userRegisterHandler = useApi(async () => {
+      const user = this.createUserInstance(this.state.form)
+      this.userRepository.register(user)
+    })
   }
 
   initialize() {
@@ -19,6 +25,7 @@ export class RegisterPageStore {
         password: '',
         confirmPassword: '',
       },
+      showUserRegisteredMessage: false,
       errors: {},
     })
 
@@ -32,6 +39,23 @@ export class RegisterPageStore {
   }
 
   async register() {
-    await this.userRepository.register(this.state.form)
+    if (!(await this.validate(true))) {
+      return
+    }
+
+    await this.userRegisterHandler.execute()
+
+    this.state.showUserRegisteredMessage = true
+    window.setTimeout(() => {
+      this.state.showUserRegisteredMessage = false
+    }, 1000)
+  }
+
+  createUserInstance(data) {
+    return new User({
+      email: data.email,
+      loginId: data.loginId,
+      password: data.password,
+    })
   }
 }
