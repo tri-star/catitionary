@@ -2,6 +2,19 @@ import { constraints } from '@/lib/validator/constraints'
 import { RuleCollection } from '@/lib/validator/Rule'
 
 export class User {
+  static get MAX_EMAIL_LENGTH() {
+    return 256
+  }
+  static get MAX_LOGIN_ID_LENGTH() {
+    return 30
+  }
+  static get MIN_PASSWORD_LENGTH() {
+    return 8
+  }
+  static get MAX_PASSWORD_LENGTH() {
+    return 1000
+  }
+
   constructor(params) {
     this.id = params?.id ?? 0
     this.email = params?.email ?? ''
@@ -21,18 +34,21 @@ export class UserRegisterRuleCollection extends RuleCollection {
     this.collection = {
       email: {
         required: constraints.required(),
-        length: constraints.maxLength(255),
+        length: constraints.maxLength(User.MAX_EMAIL_LENGTH),
       },
       loginId: {
         required: constraints.required(),
-        length: constraints.maxLength(15),
+        length: constraints.maxLength(User.MAX_LOGIN_ID_LENGTH),
         // uniqueLoginId: {
         //   asyncRule: this.uniqueLoginId(),
         // },
       },
       password: {
         required: constraints.required(),
-        length: constraints.betweenLength(8, 1000),
+        length: constraints.betweenLength(
+          User.MIN_PASSWORD_LENGTH,
+          User.MAX_PASSWORD_LENGTH
+        ),
       },
       confirmPassword: {
         same: constraints.same('password', 'パスワード'),
