@@ -21,6 +21,8 @@ class ValidationErrorConverter
         'Array'                    => ValidationErrorItem::CODE_INVALID,
         'Max'                      => ValidationErrorItem::CODE_OUT_OF_RANGE,
         'Required'                 => ValidationErrorItem::CODE_MISSING,
+        'Max'                      => ValidationErrorItem::CODE_INVALID,
+        'Min'                      => ValidationErrorItem::CODE_INVALID,
         CatTypeRule::class         => ValidationErrorItem::CODE_INVALID,
         CatCharactericsRule::class => ValidationErrorItem::CODE_INVALID,
     ];

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domain\User;
 
-use Domain\User\User;
 use Illuminate\Support\Facades\Validator as ValidatorFacade;
 use Illuminate\Validation\Validator;
 
@@ -15,11 +14,19 @@ class UserRegistrationValidatorFactory
 {
     public static function fromApiInput($email, $loginId, $password): Validator
     {
+        $maxEmailLength = User::MAX_EMAIL_LENGTH;
+        $maxLoginIdLength = User::MAX_LOGIN_ID_LENGTH;
+        $maxPasswordLength = User::MAX_PASSWORD_LENGTH;
+        $minPasswordLength = User::MIN_PASSWORD_LENGTH;
+
         return ValidatorFacade::make([
             'email'    => $email,
             'login_id' => $loginId,
             'password' => $password,
         ], [
+            'email'    => "required|max:{$maxEmailLength}",
+            'login_id' => "required|max:{$maxLoginIdLength}",
+            'password' => "required|min:{$minPasswordLength}|max:{$maxPasswordLength}",
         ]);
     }
 }

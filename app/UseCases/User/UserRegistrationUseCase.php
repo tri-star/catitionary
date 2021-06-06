@@ -6,6 +6,8 @@ namespace App\UseCases\User;
 
 use App\Domain\UseCaseResult;
 use App\Domain\User\User;
+use App\Domain\User\UserRegistrationValidatorFactory;
+use App\Validation\ValidationResult;
 
 class UserRegistrationUseCase
 {
@@ -17,6 +19,17 @@ class UserRegistrationUseCase
             'login_id' => $data['login_id'],
             'password' => $data['password'],
         ]);
+
+        $validator = UserRegistrationValidatorFactory::fromApiInput(
+            $user->email,
+            $user->login_id,
+            $data['password']
+        );
+
+
+        if ($validator->fails()) {
+            return new UseCaseResult(false, [], ValidationResult::fromValidator($validator));
+        }
 
         $user->save();
 
