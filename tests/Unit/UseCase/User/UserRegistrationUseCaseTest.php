@@ -60,6 +60,14 @@ class UserRegistrationUseCaseTest extends TestCase
     public function forTest__バリデーションエラー()
     {
         return [
+            'email__未入力' => [
+                'attributeClosure' => function () {
+                    return $this->getUserAttributes([], ['email']);
+                },
+                'expectedErrors' => [
+                    'email' => [ ValidationErrorItem::CODE_MISSING ],
+                ],
+            ],
             'email__最大長超過' => [
                 'attributeClosure' => function () {
                     return $this->getUserAttributes([
@@ -68,6 +76,32 @@ class UserRegistrationUseCaseTest extends TestCase
                 },
                 'expectedErrors' => [
                     'email' => [ ValidationErrorItem::CODE_INVALID ],
+                ],
+            ],
+            'loginId__未入力' => [
+                'attributeClosure' => function () {
+                    return $this->getUserAttributes([], ['login_id']);
+                },
+                'expectedErrors' => [
+                    'login_id' => [ ValidationErrorItem::CODE_MISSING ],
+                ],
+            ],
+            'loginId__最大長超過' => [
+                'attributeClosure' => function () {
+                    return $this->getUserAttributes([
+                        'login_id' => str_repeat('a', User::MAX_LOGIN_ID_LENGTH + 1),
+                    ]);
+                },
+                'expectedErrors' => [
+                    'login_id' => [ ValidationErrorItem::CODE_INVALID ],
+                ],
+            ],
+            'password__未入力' => [
+                'attributeClosure' => function () {
+                    return $this->getUserAttributes([], ['password']);
+                },
+                'expectedErrors' => [
+                    'password' => [ ValidationErrorItem::CODE_MISSING ],
                 ],
             ],
         ];

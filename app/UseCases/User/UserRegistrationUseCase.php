@@ -15,15 +15,15 @@ class UserRegistrationUseCase
     {
         $user = new User([
             'name'     => '',
-            'email'    => $data['email'],
-            'login_id' => $data['login_id'],
-            'password' => $data['password'],
+            'email'    => $data['email'] ?? '',
+            'login_id' => $data['login_id'] ?? '',
+            'password' => $data['password'] ?? '',
         ]);
 
         $validator = UserRegistrationValidatorFactory::fromApiInput(
             $user->email,
             $user->login_id,
-            $data['password']
+            $data['password'] ?? '',
         );
 
 
