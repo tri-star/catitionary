@@ -1,3 +1,4 @@
+import { Cache } from '@/lib/cache/Cache'
 import { constraints } from '@/lib/validator/constraints'
 import { RuleCollection } from '@/lib/validator/Rule'
 
@@ -31,6 +32,7 @@ export class UserRegisterRuleCollection extends RuleCollection {
   constructor(userRepository) {
     super()
     this.userRepository = userRepository
+    this.uniqueLoginIdCache = new Cache()
     this.collection = {
       email: {
         required: constraints.required(),
@@ -67,7 +69,9 @@ export class UserRegisterRuleCollection extends RuleCollection {
         message: '既に使用されているログインIDです。',
       }
 
-      const isExist = await this.userRepository.isLoginIdExist(value, null)
+      const isExist = await this.uniqueLoginIdCache.get(300, async () => {
+        return await this.userRepository.isLoginIdExist(value, null)
+      })
       if (isExist) {
         return errorResponse
       }
