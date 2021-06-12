@@ -10,7 +10,7 @@ export class RegisterPageStore {
 
     this.validator = useValidator()
     this.userRepository = userRepository
-    this.ruleCollection = new UserRegisterRuleCollection(null)
+    this.ruleCollection = new UserRegisterRuleCollection(userRepository)
     this.userRegisterHandler = useApi(async () => {
       const user = this.createUserInstance(this.state.form)
       this.userRepository.register(user)

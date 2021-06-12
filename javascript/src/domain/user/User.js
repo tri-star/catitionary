@@ -39,9 +39,9 @@ export class UserRegisterRuleCollection extends RuleCollection {
       loginId: {
         required: constraints.required(),
         length: constraints.maxLength(User.MAX_LOGIN_ID_LENGTH),
-        // uniqueLoginId: {
-        //   asyncRule: this.uniqueLoginId(),
-        // },
+        uniqueLoginId: {
+          asyncRule: this.uniqueLoginId(),
+        },
       },
       password: {
         required: constraints.required(),
@@ -58,7 +58,7 @@ export class UserRegisterRuleCollection extends RuleCollection {
 
   uniqueLoginId() {
     return async (value, parameters, input, context) => {
-      const excludeId = context['selfId']
+      // const excludeId = context['selfId']
       const okResponse = {
         ok: true,
       }
@@ -67,7 +67,7 @@ export class UserRegisterRuleCollection extends RuleCollection {
         message: '既に使用されているログインIDです。',
       }
 
-      const isExist = await this.userRepository.isLoginIdExist(value, excludeId)
+      const isExist = await this.userRepository.isLoginIdExist(value, null)
       if (isExist) {
         return errorResponse
       }
