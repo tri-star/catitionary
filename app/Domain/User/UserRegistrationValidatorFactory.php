@@ -24,8 +24,8 @@ class UserRegistrationValidatorFactory
             'login_id' => $loginId,
             'password' => $password,
         ], [
-            'email'    => "required|max:{$maxEmailLength}",
-            'login_id' => "required|max:{$maxLoginIdLength}",
+            'email'    => "required|max:{$maxEmailLength}|unique:users,email",
+            'login_id' => "required|max:{$maxLoginIdLength}|unique:users,login_id",
             'password' => "required|min:{$minPasswordLength}|max:{$maxPasswordLength}",
         ]);
     }

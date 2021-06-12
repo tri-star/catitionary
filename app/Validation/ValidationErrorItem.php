@@ -10,4 +10,5 @@ class ValidationErrorItem
     const CODE_MISSING = 'missing';
     const CODE_INVALID = 'invalid';
     const CODE_OUT_OF_RANGE = 'out_of_range';
+    const CODE_DUPLICATE = 'duplicate';
 }

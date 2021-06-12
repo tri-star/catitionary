@@ -23,6 +23,7 @@ class ValidationErrorConverter
         'Required'                 => ValidationErrorItem::CODE_MISSING,
         'Max'                      => ValidationErrorItem::CODE_INVALID,
         'Min'                      => ValidationErrorItem::CODE_INVALID,
+        'Unique'                   => ValidationErrorItem::CODE_DUPLICATE,
         CatTypeRule::class         => ValidationErrorItem::CODE_INVALID,
         CatCharactericsRule::class => ValidationErrorItem::CODE_INVALID,
     ];

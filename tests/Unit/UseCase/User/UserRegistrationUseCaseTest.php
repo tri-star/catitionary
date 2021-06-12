@@ -78,6 +78,17 @@ class UserRegistrationUseCaseTest extends TestCase
                     'email' => [ ValidationErrorItem::CODE_INVALID ],
                 ],
             ],
+            'email__重複' => [
+                'attributeClosure' => function () {
+                    $user = User::factory()->create();
+                    return $this->getUserAttributes([
+                        'email' => $user->email,
+                    ]);
+                },
+                'expectedErrors' => [
+                    'email' => [ ValidationErrorItem::CODE_DUPLICATE ],
+                ],
+            ],
             'loginId__未入力' => [
                 'attributeClosure' => function () {
                     return $this->getUserAttributes([], ['login_id']);
@@ -94,6 +105,17 @@ class UserRegistrationUseCaseTest extends TestCase
                 },
                 'expectedErrors' => [
                     'login_id' => [ ValidationErrorItem::CODE_INVALID ],
+                ],
+            ],
+            'loginId__重複' => [
+                'attributeClosure' => function () {
+                    $user = User::factory()->create();
+                    return $this->getUserAttributes([
+                        'login_id' => $user->login_id,
+                    ]);
+                },
+                'expectedErrors' => [
+                    'login_id' => [ ValidationErrorItem::CODE_DUPLICATE ],
                 ],
             ],
             'password__未入力' => [
