@@ -13,7 +13,7 @@ class ExistAction extends Controller
 {
     public function invoke(Request $request, UserExistenceCheckUseCase $useCase)
     {
-        $loginId = $request->input('login_id', '');
+        $loginId = $request->input('login_id') ?? '';
         $result = $useCase->executeByLoginId($loginId);
 
         return new JsonResponse([
