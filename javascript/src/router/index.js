@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../pages/Home.vue'
 import Login from '../pages/LoginPage.vue'
 import RegisterPage from '../pages/auth/RegisterPage.vue'
+import VerifyEmailPage from '@/pages/auth/VerifyEmailPage'
 
 Vue.use(VueRouter)
 
@@ -21,6 +22,11 @@ const routes = [
     path: '/auth/register',
     name: 'authRegister',
     component: RegisterPage,
+  },
+  {
+    path: '/auth/verify-email',
+    name: 'verifyEmail',
+    component: VerifyEmailPage,
   },
   // {
   //   path: '/about',

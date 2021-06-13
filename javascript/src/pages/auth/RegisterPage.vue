@@ -86,6 +86,8 @@ import SimpleButton from '@/components/common/button/SimpleButton'
 import TextInput from '@/components/common/TextInput'
 import { userRepositoryKey } from '@/domain/user/userRepositoryInterface'
 import { RegisterPageStore } from './RegisterPageStore'
+import { useRouter } from '@/hooks/useRouter'
+import { routes } from '@/router/routes'
 
 export default defineComponent({
   components: {
@@ -101,6 +103,7 @@ export default defineComponent({
   setup() {
     const userRepository = inject(userRepositoryKey)
     const registerFormStore = new RegisterPageStore(userRepository)
+    const router = useRouter()
     registerFormStore.initialize()
 
     const state = registerFormStore.state
@@ -114,7 +117,10 @@ export default defineComponent({
     })
 
     const onRegisterClicked = async () => {
-      await registerFormStore.register()
+      const success = await registerFormStore.register()
+      if (success) {
+        await router.replace({ name: routes.verifyEmail })
+      }
     }
 
     return {

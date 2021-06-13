@@ -40,15 +40,11 @@ export class RegisterPageStore {
 
   async register() {
     if (!(await this.validate(true))) {
-      return
+      return false
     }
 
     await this.userRegisterHandler.execute()
-
-    this.state.showUserRegisteredMessage = true
-    window.setTimeout(() => {
-      this.state.showUserRegisteredMessage = false
-    }, 1000)
+    return true
   }
 
   createUserInstance(data) {
