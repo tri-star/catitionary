@@ -37,7 +37,7 @@
 <script>
 import { useValidator } from '@/hooks/useValidator'
 import { constraints } from '@/lib/validator/constraints'
-import { RuleCollection } from '@/lib/validator/Rule'
+import { RuleCollection } from '@/lib/validator/RuleCollection'
 import { defineComponent, inject, reactive, watch } from '@vue/composition-api'
 import FormRowList from '@/components/common/form/FormRowList'
 import FormRow from '@/components/common/form/FormRow'

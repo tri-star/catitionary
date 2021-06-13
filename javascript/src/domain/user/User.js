@@ -1,6 +1,7 @@
 import { Cache } from '@/lib/cache/Cache'
 import { constraints } from '@/lib/validator/constraints'
-import { RuleCollection } from '@/lib/validator/Rule'
+import { Rule } from '@/lib/validator/Rule'
+import { RuleCollection } from '@/lib/validator/RuleCollection'
 
 export class User {
   static get MAX_EMAIL_LENGTH() {
@@ -41,9 +42,7 @@ export class UserRegisterRuleCollection extends RuleCollection {
       loginId: {
         required: constraints.required(),
         length: constraints.maxLength(User.MAX_LOGIN_ID_LENGTH),
-        uniqueLoginId: {
-          asyncRule: this.uniqueLoginId(),
-        },
+        uniqueLoginId: this.uniqueLoginId(),
       },
       password: {
         required: constraints.required(),
@@ -59,8 +58,7 @@ export class UserRegisterRuleCollection extends RuleCollection {
   }
 
   uniqueLoginId() {
-    return async (value, parameters, input, context) => {
-      // const excludeId = context['selfId']
+    const func = async (value, parameters, input, context) => {
       const okResponse = {
         ok: true,
       }
@@ -78,6 +76,10 @@ export class UserRegisterRuleCollection extends RuleCollection {
 
       return okResponse
     }
+    return new Rule(func, {
+      isAsync: true,
+      onlyChanged: true,
+    })
   }
 }
 
