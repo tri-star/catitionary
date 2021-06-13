@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -17,6 +18,8 @@ class User extends Authenticatable
     const MAX_LOGIN_ID_LENGTH = 30;
     const MAX_PASSWORD_LENGTH = 1000;
     const MIN_PASSWORD_LENGTH = 8;
+
+    const EMAIL_VERIFICATION_CODE_LIFE_TIME_MIN = 24 * 60;
 
     /**
      * The attributes that are mass assignable.
@@ -38,6 +41,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'email_verification_code',
     ];
 
     /**
@@ -48,6 +52,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public static function generateEmailVerificationCode(): string
+    {
+        return Str::random(40);
+    }
 
 
     public function setPasswordAttribute(string $value)
