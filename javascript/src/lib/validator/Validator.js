@@ -124,7 +124,7 @@ export class Validator {
         ) {
           const prev = this.getPrevResult(field, ruleName)
           target = rule.target ?? field
-          if (!prev.ok && prev.message) {
+          if (prev && !prev.ok && prev.message) {
             result.add(target, [prev.message])
           }
           continue
