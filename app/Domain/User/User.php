@@ -16,6 +16,7 @@ class User extends Authenticatable
     const MAX_EMAIL_LENGTH = 255;
     const MAX_LOGIN_ID_LENGTH = 30;
     const MAX_PASSWORD_LENGTH = 1000;
+    const MIN_PASSWORD_LENGTH = 8;
 
     /**
      * The attributes that are mass assignable.

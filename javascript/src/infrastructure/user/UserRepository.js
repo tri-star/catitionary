@@ -41,21 +41,18 @@ export class UserRepository {
   }
 
   async isLoginIdExist(loginId, excludeId) {
-    const users = this.loadUsers()
-    const user = users.reduce((accumlator, u) => {
-      return u.loginId === loginId ? u : accumlator
-    }, null)
+    const result = await this.axios.get(Endpoints.user.isLoginIdExists, {
+      params: {
+        login_id: loginId,
+      },
+    })
 
-    await new Promise((resolve) =>
-      setTimeout(() => {
-        resolve()
-      }, 200)
-    )
-
-    if (excludeId && user && user.id === excludeId) {
-      return false
+    if (result.status !== 200) {
+      throw new Error('ログインIDの重複確認に失敗しました')
     }
-    return user ? true : false
+
+    const exists = result.data.exist ?? false
+    return exists
   }
 
   async fetchUserList(page, pageSize, conditions) {
