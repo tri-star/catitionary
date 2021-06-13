@@ -36,7 +36,7 @@ class UserRegistrationUseCaseTest extends TestCase
         $this->useCase->execute($data);
 
         $this->assertDatabaseHas('users', [
-            'login_id' => 'test01',
+            'login_id' => $user->login_id,
         ]);
     }
 
@@ -75,7 +75,7 @@ class UserRegistrationUseCaseTest extends TestCase
                     ]);
                 },
                 'expectedErrors' => [
-                    'email' => [ ValidationErrorItem::CODE_INVALID ],
+                    'email' => [ ValidationErrorItem::CODE_OUT_OF_RANGE ],
                 ],
             ],
             'email__重複' => [
@@ -104,7 +104,7 @@ class UserRegistrationUseCaseTest extends TestCase
                     ]);
                 },
                 'expectedErrors' => [
-                    'login_id' => [ ValidationErrorItem::CODE_INVALID ],
+                    'login_id' => [ ValidationErrorItem::CODE_OUT_OF_RANGE ],
                 ],
             ],
             'loginId__重複' => [
