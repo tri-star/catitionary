@@ -186,6 +186,7 @@ export class UserRepository {
           code,
         },
       })
+      return true
     } catch (e) {
       if (e.response.status == 422) {
         return false
