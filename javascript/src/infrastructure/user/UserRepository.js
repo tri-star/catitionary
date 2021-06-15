@@ -1,6 +1,7 @@
 import { User } from '@/domain/user/User'
 import { ResourceNotFoundError } from '@/lib/errors/ResourceNotFoundError'
 import { Endpoints } from '@/constants/Endpoints'
+import { ServerSideError } from '@/errors/ServerSideError'
 
 export class UserRepository {
   constructor(axios) {
@@ -176,5 +177,21 @@ export class UserRepository {
     })
 
     localStorage.setItem('users', JSON.stringify(users))
+  }
+
+  async verifyEmail(code) {
+    try {
+      await this.axios.get(Endpoints.user.verifyEmail, {
+        params: {
+          code,
+        },
+      })
+      return true
+    } catch (e) {
+      if (e.response.status == 422) {
+        return false
+      }
+      throw new ServerSideError(`status code=${e.response.status}`)
+    }
   }
 }

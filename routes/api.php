@@ -26,5 +26,6 @@ Route::post('/names', [SubmitNameAction::class, 'invoke']);
 
 Route::prefix('/internal')->group(function () {
     Route::post('/auth/register', [\App\Http\Controllers\Api\Internal\Auth\RegisterAction::class, 'invoke']);
+    Route::get('/auth/verify-email', [\App\Http\Controllers\Api\Internal\Auth\VerifyEmailAction::class, 'invoke']);
     Route::get('/user/exists', [\App\Http\Controllers\Api\Internal\User\ExistAction::class, 'invoke']);
 });

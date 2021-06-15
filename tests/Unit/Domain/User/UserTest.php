@@ -6,6 +6,7 @@ namespace Tests\Domain\User;
 
 use App\Domain\User\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
@@ -54,6 +55,48 @@ class UserTest extends TestCase
                 'attributes' => [
                     'password' => str_repeat('A', User::MAX_PASSWORD_LENGTH),
                 ],
+            ],
+        ];
+    }
+
+
+    /**
+     * @dataProvider forTest__メール確認コード__有効期限
+     */
+    public function test__メール確認コード__有効期限($userCreatedAt, $now, $expectOk)
+    {
+        Carbon::setTestNow($now);
+        $baseUser = User::factory()->create([
+            'created_at' => $userCreatedAt,
+        ]);
+
+        $user = User::byEmailVerificationCode($baseUser->email_verification_code)->first();
+
+        if ($expectOk) {
+            $this->assertNotNull($user);
+        } else {
+            $this->assertNull($user);
+        }
+    }
+
+
+    public function forTest__メール確認コード__有効期限()
+    {
+        return [
+            '有効期限内__確認OK' => [
+                'user_created' => '2021-01-01 10:00:00',
+                'now'          => '2021-01-01 10:00:00',
+                'expectOk'     => true,
+            ],
+            '有効期限ちょうど__確認OK' => [
+                'user_created' => '2021-01-01 10:00:00',
+                'now'          => '2021-01-02 10:00:00',
+                'expectOk'     => true,
+            ],
+            '有効期限切れ__確認NG' => [
+                'user_created' => '2021-01-01 10:00:00',
+                'now'          => '2021-01-02 10:00:01',
+                'expectOk'     => false,
             ],
         ];
     }

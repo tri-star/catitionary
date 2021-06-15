@@ -31,6 +31,7 @@ class UserRegistrationUseCase
             return new UseCaseResult(false, [], ValidationResult::fromValidator($validator));
         }
 
+        $user->email_verification_code = User::generateEmailVerificationCode();
         $user->save();
 
         return new UseCaseResult(true);
