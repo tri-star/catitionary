@@ -7,6 +7,7 @@ namespace App\UseCases\User;
 use App\Domain\UseCaseResult;
 use App\Domain\User\User;
 use App\Domain\User\UserRegistrationValidatorFactory;
+use App\Notifications\EmailVerification;
 use App\Validation\ValidationResult;
 
 class UserRegistrationUseCase
@@ -33,6 +34,8 @@ class UserRegistrationUseCase
 
         $user->email_verification_code = User::generateEmailVerificationCode();
         $user->save();
+
+        $user->notify(new EmailVerification());
 
         return new UseCaseResult(true);
     }

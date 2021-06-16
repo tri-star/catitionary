@@ -3,11 +3,14 @@
 namespace Tests\Unit\Domain\User;
 
 use App\Domain\User\User;
+use App\Notifications\EmailVerification;
 use App\UseCases\User\UserRegistrationUseCase;
 use App\Validation\ValidationErrorItem;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 
 class UserRegistrationUseCaseTest extends TestCase
@@ -26,6 +29,8 @@ class UserRegistrationUseCaseTest extends TestCase
 
     public function test__通常ケース()
     {
+        Notification::fake();
+
         $user = User::factory()->make();
         $data = [
             'email'    => $user->email,
@@ -38,6 +43,9 @@ class UserRegistrationUseCaseTest extends TestCase
         $this->assertDatabaseHas('users', [
             'login_id' => $user->login_id,
         ]);
+
+        $registeredUser = User::byLoginId($user->login_id)->first();
+        Notification::assertSentTo($registeredUser, EmailVerification::class);
     }
 
 
