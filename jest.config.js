@@ -4,12 +4,14 @@ module.exports = {
     '^~/(.*)$': '<rootDir>/javascript/src/$1',
     '^vue$': 'vue/dist/vue.common.js',
   },
-  moduleFileExtensions: ['js', 'json'],
+  moduleFileExtensions: ['js', 'json', 'vue'],
   transform: {
     '^.+\\.js$': 'babel-jest',
     '.*\\.(vue)$': 'vue-jest',
   },
   collectCoverage: true,
-  collectCoverageFrom: ['<rootDir>/javascript/src/**/*.vue'],
+  coverageDirectory: 'tests/coverage/jest',
+  collectCoverageFrom: ['<rootDir>/javascript/src/**/*.{js,vue}'],
+  coverageReporters: ['html-spa', 'text-summary', 'lcov'],
   // setupFiles: ['./test/setup.js'],
 }

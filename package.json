@@ -7,7 +7,8 @@
     "build": "NODE_ENV=production webpack",
     "build-dev": "webpack",
     "lint": "eslint",
-    "fix": "eslint --fix && prettier -w ."
+    "fix": "eslint --fix && prettier -w .",
+    "test": "jest"
   },
   "dependencies": {
     "core-js": "^3.8.3",
@@ -26,8 +27,11 @@
     "@vue/test-utils": "^1.1.3",
     "autoprefixer": "^10.2.5",
     "axios": "^0.21.1",
+    "babel-core": "^7.0.0-0",
+    "babel-jest": "^27.0.2",
     "babel-loader": "^8.2.2",
     "babel-plugin-inline-dotenv": "^1.6.0",
+    "babel-preset-env": "^1.7.0",
     "css-loader": "^5.2.4",
     "eslint": "^7.20.0",
     "eslint-plugin-vue": "^7.6.0",
@@ -40,7 +44,7 @@
     "prettier": "^2.2.1",
     "tailwindcss": "^2.1.2",
     "url-loader": "^4.1.1",
-    "vue-jest": "^4.0.1",
+    "vue-jest": "^3.0.7",
     "vue-template-compiler": "^2.6.11",
     "webpack": "^5.36.2",
     "webpack-cli": "^4.6.0"
