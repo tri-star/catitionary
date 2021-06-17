@@ -2,6 +2,9 @@ name: 'Run PHP,JS test'
 
 on:
   pull_request:
+  push:
+    branches:
+      - main
 
 jobs:
   php-test:
