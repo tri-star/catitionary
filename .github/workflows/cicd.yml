@@ -39,3 +39,42 @@ jobs:
         env:
           DB_HOST: 127.0.0.1
         run: vendor/bin/phpunit --coverage-clover=coverage.xml
+      - name: upload to Codecov
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        run: bash <(curl -s https://codecov.io/bash) -f coverage.xml -cF php
+
+  js-test:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v1
+      - name: Copy .env
+        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+
+      - name: Cache node packages
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Install Dependencies
+        run: yarn install
+      - name: Execute lint
+        run: yarn lint
+      - name: Execute tests
+        run: yarn test
+      - name: Execute build
+        run: yarn build-dev
+      - name: upload coverage
+        uses: actions/upload-artifact@v1
+        with:
+          name: jest-coverage
+          path: ./tests/coverage/jest
+      - name: upload to Codecov
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        run: bash <(curl -s https://codecov.io/bash) -cF javascript

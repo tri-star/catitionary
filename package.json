@@ -6,7 +6,7 @@
     "watch": "webpack watch",
     "build": "NODE_ENV=production webpack",
     "build-dev": "webpack",
-    "lint": "eslint",
+    "lint": "eslint  --ignore-path=.gitignore --ext=.js,.vue ./javascript",
     "fix": "eslint --fix && prettier -w .",
     "test": "jest"
   },
