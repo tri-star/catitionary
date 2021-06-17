@@ -11,4 +11,9 @@ module.exports = {
     ],
     ['@babel/plugin-transform-runtime', { corejs: 3 }],
   ],
+  env: {
+    test: {
+      presets: [['env', { targets: { node: 'current' } }]],
+    },
+  },
 }
