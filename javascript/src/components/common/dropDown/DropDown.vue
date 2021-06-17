@@ -15,6 +15,7 @@
       v-if="show"
       class="absolute z-40 w-full h-full left-0 top-0"
       @mousedown="onMaskMouseDown"
+      data-test="mask"
     ></div>
   </div>
 </template>
