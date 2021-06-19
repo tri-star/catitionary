@@ -4,73 +4,77 @@
       :visible="state.showUserRegisteredMessage"
       message="ユーザーを登録しました。"
     ></AlertBox>
-    <FormRowList class="items-center justify-center mx-auto lg:w-1/2">
-      <LabeledFormRow label="メールアドレス" label-width="w-36">
-        <template slot="form">
-          <TextInput
-            v-model="state.form.email"
-            :isError="'email' in state.errors"
-          />
-          <template v-if="'email' in state.errors">
-            <FormError v-for="(message, i) in state.errors.email" :key="i">
-              {{ message }}
-            </FormError>
+
+    <PageContent class="mx-auto lg:w-1/2">
+      <SectionTitle title="会員登録" class="mb-4" />
+      <FormRowList class="items-center">
+        <LabeledFormRow label="メールアドレス" label-width="w-36">
+          <template slot="form">
+            <TextInput
+              v-model="state.form.email"
+              :isError="'email' in state.errors"
+            />
+            <template v-if="'email' in state.errors">
+              <FormError v-for="(message, i) in state.errors.email" :key="i">
+                {{ message }}
+              </FormError>
+            </template>
           </template>
-        </template>
-      </LabeledFormRow>
-      <LabeledFormRow label="ログインID" label-width="w-36">
-        <template slot="form">
-          <TextInput
-            v-model="state.form.loginId"
-            :isError="'loginId' in state.errors"
-          />
-          <template v-if="'loginId' in state.errors">
-            <FormError v-for="(message, i) in state.errors.loginId" :key="i">
-              {{ message }}
-            </FormError>
+        </LabeledFormRow>
+        <LabeledFormRow label="ログインID" label-width="w-36">
+          <template slot="form">
+            <TextInput
+              v-model="state.form.loginId"
+              :isError="'loginId' in state.errors"
+            />
+            <template v-if="'loginId' in state.errors">
+              <FormError v-for="(message, i) in state.errors.loginId" :key="i">
+                {{ message }}
+              </FormError>
+            </template>
           </template>
-        </template>
-      </LabeledFormRow>
-      <LabeledFormRow label="パスワード" label-width="w-36">
-        <template slot="form">
-          <TextInput
-            v-model="state.form.password"
-            :type="'password'"
-            :isError="'password' in state.errors"
-          />
-          <template v-if="'password' in state.errors">
-            <FormError v-for="(message, i) in state.errors.password" :key="i">
-              {{ message }}
-            </FormError>
+        </LabeledFormRow>
+        <LabeledFormRow label="パスワード" label-width="w-36">
+          <template slot="form">
+            <TextInput
+              v-model="state.form.password"
+              :type="'password'"
+              :isError="'password' in state.errors"
+            />
+            <template v-if="'password' in state.errors">
+              <FormError v-for="(message, i) in state.errors.password" :key="i">
+                {{ message }}
+              </FormError>
+            </template>
           </template>
-        </template>
-      </LabeledFormRow>
-      <LabeledFormRow label="確認用パスワード" label-width="w-36">
-        <template slot="form">
-          <TextInput
-            v-model="state.form.confirmPassword"
-            :type="'password'"
-            :isError="'confirmPassword' in state.errors"
-          />
-          <template v-if="'confirmPassword' in state.errors">
-            <FormError
-              v-for="(message, i) in state.errors.confirmPassword"
-              :key="i"
-            >
-              {{ message }}
-            </FormError>
+        </LabeledFormRow>
+        <LabeledFormRow label="確認用パスワード" label-width="w-36">
+          <template slot="form">
+            <TextInput
+              v-model="state.form.confirmPassword"
+              :type="'password'"
+              :isError="'confirmPassword' in state.errors"
+            />
+            <template v-if="'confirmPassword' in state.errors">
+              <FormError
+                v-for="(message, i) in state.errors.confirmPassword"
+                :key="i"
+              >
+                {{ message }}
+              </FormError>
+            </template>
           </template>
-        </template>
-      </LabeledFormRow>
-      <FormRow>
-        <SimpleButton
-          :title="'登録'"
-          class="mr-3"
-          :disabled="isError"
-          @onclick="onRegisterClicked"
-        />
-      </FormRow>
-    </FormRowList>
+        </LabeledFormRow>
+        <FormRow>
+          <SimpleButton
+            :title="'登録'"
+            class="mr-3"
+            :disabled="isError"
+            @onclick="onRegisterClicked"
+          />
+        </FormRow>
+      </FormRowList>
+    </PageContent>
   </DefaultLayout>
 </template>
 
