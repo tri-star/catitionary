@@ -6,4 +6,9 @@ export class Rule {
     this.name = options.name ?? null
     this.target = options.target ?? null
   }
+
+  setTarget(target) {
+    this.target = target
+    return this
+  }
 }
