@@ -1,3 +1,5 @@
+import { Rule } from './Rule'
+
 const isString = (value) => {
   if (value === undefined || value === null) {
     return false
@@ -9,7 +11,7 @@ const isString = (value) => {
 
 export const constraints = {
   required: () => {
-    return (value, parameters, input, context) => {
+    const func = (value, parameters, input, context) => {
       const okResponse = {
         ok: true,
       }
@@ -26,9 +28,12 @@ export const constraints = {
       }
       return okResponse
     }
+    return new Rule(func, {
+      name: 'required',
+    })
   },
   length: (min, max) => {
-    return (value, parameters, input, context) => {
+    const func = (value, parameters, input, context) => {
       const okResponse = {
         ok: true,
       }
@@ -46,10 +51,13 @@ export const constraints = {
       }
       return okResponse
     }
+    return new Rule(func, {
+      name: 'length',
+    })
   },
 
   maxLength: (max) => {
-    return (value, parameters, input, context) => {
+    const func = (value, parameters, input, context) => {
       const okResponse = {
         ok: true,
       }
@@ -67,9 +75,12 @@ export const constraints = {
       }
       return okResponse
     }
+    return new Rule(func, {
+      name: 'maxLength',
+    })
   },
   betweenLength: (min, max) => {
-    return (value, parameters, input, context) => {
+    const func = (value, parameters, input, context) => {
       const okResponse = {
         ok: true,
       }
@@ -87,9 +98,12 @@ export const constraints = {
       }
       return okResponse
     }
+    return new Rule(func, {
+      name: 'betweenLength',
+    })
   },
   same: (field, displayName) => {
-    return (value, parameters, input, context) => {
+    const func = (value, parameters, input, context) => {
       const okResponse = {
         ok: true,
       }
@@ -102,5 +116,8 @@ export const constraints = {
       }
       return okResponse
     }
+    return new Rule(func, {
+      name: 'same',
+    })
   },
 }
