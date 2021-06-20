@@ -10,9 +10,10 @@
 </template>
 
 <script>
+import { defineComponent } from '@vue/composition-api'
 import AppHeader from '@/components/common/AppHeader'
 
-export default {
+export default defineComponent({
   components: {
     AppHeader,
   },
@@ -20,5 +21,5 @@ export default {
   setup() {
     return {}
   },
-}
+})
 </script>

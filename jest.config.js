@@ -13,5 +13,5 @@ module.exports = {
   coverageDirectory: 'tests/coverage/jest',
   collectCoverageFrom: ['<rootDir>/javascript/src/**/*.{js,vue}'],
   coverageReporters: ['html-spa', 'text-summary', 'lcov'],
-  // setupFiles: ['./test/setup.js'],
+  setupFiles: ['./javascript/src/bootstrap_test.js'],
 }
