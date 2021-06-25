@@ -1,4 +1,6 @@
 import { authHandlerKey } from '@/domain/user/authHandlerInterface'
+import { catRepositoryKey } from '@/domain/cat/catRepositoryInterface'
+import { CatRepository } from '@/infrastructure/cat/CatRepository'
 import { AuthHandler } from '@/infrastructure/authHandler/AuthHandler'
 import { userRepositoryKey } from '@/domain/user/userRepositoryInterface'
 import { UserRepository } from '@/infrastructure/user/UserRepository'
@@ -20,6 +22,10 @@ export class ServiceProvider {
         const userRepository = this.get(userRepositoryKey)
         const axios = this.get('axios')
         return new AuthHandler(userRepository, axios)
+      },
+      [catRepositoryKey]: () => {
+        const axios = this.get('axios')
+        return new CatRepository(axios)
       },
       axios: () => {
         axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'

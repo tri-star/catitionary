@@ -1,52 +1,65 @@
 <template>
   <DefaultLayout>
     <div>
-      <FormRowList>
-        <CardItem>
+      <PageContent class="lg:w-1/2 mx-auto">
+        <SectionTitle title="名前の提案" class="mb-4" />
+        <FormRowList>
           <LabeledFormRow label-width="w-20" label="種類">
             <template v-slot:form>
-              <select>
-                <option>テスト</option>
-              </select>
+              <LabeledCheckbox
+                class="mr-2"
+                v-for="type of state.typeList"
+                :key="type.id"
+                :id="type.id"
+                :label="type.name"
+              />
             </template>
           </LabeledFormRow>
-        </CardItem>
-        <CardItem>
           <LabeledFormRow label-width="w-20" label="特徴">
             <template v-slot:form>
-              <select>
-                <option>テスト</option>
-              </select>
+              <LabeledCheckbox
+                class="mr-2"
+                v-for="character of state.charactericsList"
+                :key="character.id"
+                :id="character.id"
+                :label="character.name"
+              />
             </template>
           </LabeledFormRow>
-        </CardItem>
-        <CardItem>
           <FormRow class="justify-center"
             ><SimpleButton title="送信"
           /></FormRow>
-        </CardItem>
-      </FormRowList>
+        </FormRowList>
+      </PageContent>
     </div>
   </DefaultLayout>
 </template>
 
 <script>
-import CardItem from '@/components/common/CardItem'
-import DefaultLayout from '@/layouts/DefaultLayout'
+import { defineComponent, inject } from '@vue/composition-api'
+import { catRepositoryKey } from '@/domain/cat/catRepositoryInterface'
 import FormRowList from '@/components/common/form/FormRowList'
 import FormRow from '@/components/common/form/FormRow'
 import LabeledFormRow from '@/components/common/form/LabeledFormRow'
 import SimpleButton from '@/components/common/button/SimpleButton'
+import { HomeStore } from './HomeStore'
 
-export default {
+export default defineComponent({
   components: {
-    DefaultLayout,
-    CardItem,
     LabeledFormRow,
     FormRow,
     FormRowList,
     SimpleButton,
   },
-  setup() {},
-}
+  setup() {
+    const catRepository = inject(catRepositoryKey)
+    const homeStore = new HomeStore(catRepository)
+
+    homeStore.loadMenuList()
+
+    return {
+      state: homeStore.state,
+    }
+  },
+})
 </script>
