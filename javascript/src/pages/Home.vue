@@ -24,10 +24,23 @@
               />
             </template>
           </LabeledFormRow>
-          <FormRow class="justify-center"
-            ><SimpleButton title="送信"
-          /></FormRow>
+          <FormRow class="justify-center">
+            <SimpleButton
+              title="送信"
+              @onclick="handleGenerateNamesClick"
+              :disabled="state.submitted"
+            />
+          </FormRow>
         </FormRowList>
+        <div v-if="generateNamesHandler.isPending()">ロード中</div>
+        <div v-else-if="generateNamesHandler.isError()">
+          エラーが発生しました。
+        </div>
+        <div v-else-if="generateNamesHandler.isDone()">
+          <div v-for="name of state.names" :key="name.id">
+            {{ name.name }}
+          </div>
+        </div>
       </PageContent>
     </div>
   </DefaultLayout>
@@ -41,6 +54,7 @@ import {
   onMounted,
 } from '@vue/composition-api'
 import { catRepositoryKey } from '@/domain/cat/catRepositoryInterface'
+import { nameRepositoryKey } from '@/domain/name/NameRepositoryInterface'
 import FormRowList from '@/components/common/form/FormRowList'
 import FormRow from '@/components/common/form/FormRow'
 import LabeledFormRow from '@/components/common/form/LabeledFormRow'
@@ -56,7 +70,8 @@ export default defineComponent({
   },
   setup() {
     const catRepository = inject(catRepositoryKey)
-    const homeStore = new HomeStore(catRepository)
+    const nameRepository = inject(nameRepositoryKey)
+    const homeStore = new HomeStore(catRepository, nameRepository)
 
     onMounted(async () => {
       await homeStore.loadMenuList()
@@ -82,6 +97,8 @@ export default defineComponent({
 
     return {
       state: homeStore.state,
+      generateNamesHandler: homeStore.generateNamesHandler,
+      handleGenerateNamesClick: homeStore.handleGenerateNamesClick,
       handleTypeChange: homeStore.handleTypeChange,
       handleCharactericsChange: homeStore.handleCharactericsChange,
       typeCheckItemList,

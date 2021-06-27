@@ -8,4 +8,7 @@ export const Endpoints = {
     types: '/api/cat/types',
     characterics: '/api/cat/characterics',
   },
+  name: {
+    generateNames: '/api/names'
+  }
 }
