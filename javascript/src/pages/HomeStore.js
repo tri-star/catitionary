@@ -5,6 +5,8 @@ export class HomeStore {
     this.state = reactive({
       typeList: [],
       charactericsList: [],
+      checkedTypes: [],
+      checkedCharacterics: [],
     })
     this.catRepository = catRepository
   }
@@ -14,5 +16,13 @@ export class HomeStore {
       this.catRepository.getTypeList(),
       this.catRepository.getCharactericsList(),
     ])
+  }
+
+  handleTypeChange(newCheckedItemIds) {
+    this.state.checkedTypes = newCheckedItemIds
+  }
+
+  handleCharactericsChange(newCheckedItemIds) {
+    this.state.checkedCharacterics = newCheckedItemIds
   }
 }

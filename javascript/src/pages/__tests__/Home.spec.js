@@ -2,6 +2,7 @@ import flushPromises from 'flush-promises'
 import { catRepositoryKey } from '@/domain/cat/catRepositoryInterface'
 import { CatRepositoryStub } from '@/infrastructure/cat/CatRepositoryStub'
 import { mount } from '@vue/test-utils'
+import CheckBoxList from '@/components/common/checkBox/CheckBoxList'
 import Home from '../Home'
 import LabeledFormRow from '@/components/common/form/LabeledFormRow'
 import LabeledCheckBox from '@/components/common/checkBox/LabeledCheckBox'
@@ -14,6 +15,7 @@ describe('Home', () => {
   const createWrapper = () => {
     return mount(Home, {
       stubs: {
+        CheckBoxList,
         DefaultLayout: true,
         PageContent: true,
         SectionTitle: true,

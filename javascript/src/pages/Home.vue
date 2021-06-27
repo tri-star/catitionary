@@ -6,23 +6,21 @@
         <FormRowList>
           <LabeledFormRow label-width="w-20" label="種類">
             <template v-slot:form>
-              <LabeledCheckBox
-                class="mr-2"
-                v-for="type of state.typeList"
-                :key="type.id"
-                :id="type.id"
-                :label="type.name"
+              <CheckBoxList
+                itemClass="mr-2"
+                :items="typeCheckItemList"
+                :checked="state.checkedTypes"
+                @change="handleTypeChange"
               />
             </template>
           </LabeledFormRow>
           <LabeledFormRow label-width="w-20" label="特徴">
             <template v-slot:form>
-              <LabeledCheckBox
-                class="mr-2"
-                v-for="character of state.charactericsList"
-                :key="character.id"
-                :id="character.id"
-                :label="character.name"
+              <CheckBoxList
+                itemClass="mr-2"
+                :items="charactericsCheckItemList"
+                :checked="state.checkedCharacterics"
+                @change="handleCharactericsChange"
               />
             </template>
           </LabeledFormRow>
@@ -36,7 +34,12 @@
 </template>
 
 <script>
-import { defineComponent, inject, onMounted } from '@vue/composition-api'
+import {
+  computed,
+  defineComponent,
+  inject,
+  onMounted,
+} from '@vue/composition-api'
 import { catRepositoryKey } from '@/domain/cat/catRepositoryInterface'
 import FormRowList from '@/components/common/form/FormRowList'
 import FormRow from '@/components/common/form/FormRow'
@@ -59,8 +62,30 @@ export default defineComponent({
       await homeStore.loadMenuList()
     })
 
+    const typeCheckItemList = computed(() => {
+      return homeStore.state.typeList.map((item) => {
+        return {
+          id: item.id,
+          label: item.name,
+        }
+      })
+    })
+
+    const charactericsCheckItemList = computed(() => {
+      return homeStore.state.charactericsList.map((item) => {
+        return {
+          id: item.id,
+          label: item.name,
+        }
+      })
+    })
+
     return {
       state: homeStore.state,
+      handleTypeChange: homeStore.handleTypeChange,
+      handleCharactericsChange: homeStore.handleCharactericsChange,
+      typeCheckItemList,
+      charactericsCheckItemList,
     }
   },
 })
