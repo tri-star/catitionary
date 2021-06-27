@@ -3,8 +3,8 @@ import { reactive } from '@vue/composition-api'
 export class HomeStore {
   constructor(catRepository) {
     this.state = reactive({
-      typeList: {},
-      charactericsList: {},
+      typeList: [],
+      charactericsList: [],
     })
     this.catRepository = catRepository
   }

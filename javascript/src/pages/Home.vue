@@ -6,7 +6,7 @@
         <FormRowList>
           <LabeledFormRow label-width="w-20" label="種類">
             <template v-slot:form>
-              <LabeledCheckbox
+              <LabeledCheckBox
                 class="mr-2"
                 v-for="type of state.typeList"
                 :key="type.id"
@@ -17,7 +17,7 @@
           </LabeledFormRow>
           <LabeledFormRow label-width="w-20" label="特徴">
             <template v-slot:form>
-              <LabeledCheckbox
+              <LabeledCheckBox
                 class="mr-2"
                 v-for="character of state.charactericsList"
                 :key="character.id"
@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { defineComponent, inject } from '@vue/composition-api'
+import { defineComponent, inject, onMounted } from '@vue/composition-api'
 import { catRepositoryKey } from '@/domain/cat/catRepositoryInterface'
 import FormRowList from '@/components/common/form/FormRowList'
 import FormRow from '@/components/common/form/FormRow'
@@ -55,7 +55,9 @@ export default defineComponent({
     const catRepository = inject(catRepositoryKey)
     const homeStore = new HomeStore(catRepository)
 
-    homeStore.loadMenuList()
+    onMounted(async () => {
+      await homeStore.loadMenuList()
+    })
 
     return {
       state: homeStore.state,
