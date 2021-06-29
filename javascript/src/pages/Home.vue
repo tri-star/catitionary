@@ -32,10 +32,7 @@
             />
           </FormRow>
         </FormRowList>
-        <div v-if="generateNamesHandler.isPending()">ロード中</div>
-        <div v-else-if="generateNamesHandler.isError()">
-          エラーが発生しました。
-        </div>
+        <div v-if="generateNamesHandler.isError()">エラーが発生しました。</div>
         <div v-else-if="generateNamesHandler.isDone()">
           <div v-for="name of state.names" :key="name.id">
             {{ name.name }}
@@ -43,6 +40,7 @@
         </div>
       </PageContent>
     </div>
+    <LoadingIndicator :show="generateNamesHandler.isPending()" />
   </DefaultLayout>
 </template>
 
