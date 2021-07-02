@@ -31,6 +31,7 @@ export class NameRepository {
         new Name('kazukichi', 'かずきち'),
         new Name('nihei', 'にへい'),
         new Name('kumazou', 'くまぞう'),
+        new Name('shirou', 'しろう'),
       ]
       return nameList
     } catch (e) {

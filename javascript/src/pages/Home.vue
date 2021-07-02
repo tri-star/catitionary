@@ -34,8 +34,13 @@
         </FormRowList>
         <div v-if="generateNamesHandler.isError()">エラーが発生しました。</div>
         <div v-else-if="generateNamesHandler.isDone()">
-          <div v-for="name of state.names" :key="name.id">
-            {{ name.name }}
+          <div class="flex flex-wrap my-4">
+            <NameCard
+              :name="name.name"
+              v-for="name of state.names"
+              :key="name.id"
+              class="m-1"
+            />
           </div>
         </div>
       </PageContent>
@@ -56,12 +61,14 @@ import { nameRepositoryKey } from '@/domain/name/NameRepositoryInterface'
 import FormRowList from '@/components/common/form/FormRowList'
 import FormRow from '@/components/common/form/FormRow'
 import LabeledFormRow from '@/components/common/form/LabeledFormRow'
+import NameCard from '@/components/name/NameCard'
 import SimpleButton from '@/components/common/button/SimpleButton'
 import { HomeStore } from './HomeStore'
 
 export default defineComponent({
   components: {
     LabeledFormRow,
+    NameCard,
     FormRow,
     FormRowList,
     SimpleButton,
