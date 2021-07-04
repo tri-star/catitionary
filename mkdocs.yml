@@ -1,0 +1,27 @@
+site_name: "Catitionary Docs"
+repo_url: https://gitlab.com/tristar/catitionary
+# edit_uri: edit/master/mkdocs/docs
+theme:
+  name: "material"
+  language: "ja"
+  #  custom_dir: overrides
+  feature:
+    tabs: true
+  palette:
+    primary: "brown"
+    accent: "deep orange"
+
+use_directory_urls: false
+
+nav:
+  - "Top": "/"
+  - "設計":
+    - "名前パターン生成": "/design/names/name-generation.html"
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - codehilite
+  - toc:
+      permalink: true
+      slugify: !!python/name:pymdownx.slugs.uslugify
