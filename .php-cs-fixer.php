@@ -1,4 +1,5 @@
 <?php
+
 $finder = PhpCsFixer\Finder::create()
     ->name('*.php')
     ->notName('_ide_helper.php')
@@ -8,18 +9,20 @@ $finder = PhpCsFixer\Finder::create()
     ->exclude('data')
     ->exclude('bootstrap/cache')
     ->in(__DIR__);
-return PhpCsFixer\Config::create()
+return (new PhpCsFixer\Config())
     ->setRules([
-        '@PSR2' => true,
-        'ordered_imports' => true,
-        'binary_operator_spaces' =>  [
+        '@PSR2'                  => true,
+        'ordered_imports'        => true,
+        'binary_operator_spaces' => [
             'operators' => [
                 '=>' => 'align',
-                '=' => null,
+                '='  => null,
             ],
         ],
-        'single_quote' => true,
-        'trailing_comma_in_multiline_array' => true,
+        'single_quote'                => true,
+        'trailing_comma_in_multiline' => [
+            'elements' => ['arrays']
+        ],
     ])
     ->setUsingCache(false)
     ->setFinder($finder);
