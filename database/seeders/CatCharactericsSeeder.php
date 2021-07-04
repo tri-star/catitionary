@@ -21,6 +21,9 @@ class CatCharactericsSeeder extends Seeder
         ];
 
         foreach ($types as $id=>$name) {
+            if (CatCharacterics::where('key', $id)->count() > 0) {
+                continue;
+            }
             $characterics = new CatCharacterics([
                 'key'  => $id,
                 'name' => $name,
