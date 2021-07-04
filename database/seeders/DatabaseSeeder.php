@@ -15,5 +15,6 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(CatTypeSeeder::class);
         $this->call(CatCharactericsSeeder::class);
+        $this->call(NameIdeaSeeder::class);
     }
 }
