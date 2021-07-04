@@ -1,5 +1,9 @@
 import { authHandlerKey } from '@/domain/user/authHandlerInterface'
 import { AuthHandler } from '@/infrastructure/authHandler/AuthHandler'
+import { catRepositoryKey } from '@/domain/cat/catRepositoryInterface'
+import { CatRepository } from '@/infrastructure/cat/CatRepository'
+import { nameRepositoryKey } from '@/domain/name/NameRepositoryInterface'
+import { NameRepository } from '@/infrastructure/name/NameRepository'
 import { userRepositoryKey } from '@/domain/user/userRepositoryInterface'
 import { UserRepository } from '@/infrastructure/user/UserRepository'
 import _mapValues from 'lodash/mapValues'
@@ -20,6 +24,14 @@ export class ServiceProvider {
         const userRepository = this.get(userRepositoryKey)
         const axios = this.get('axios')
         return new AuthHandler(userRepository, axios)
+      },
+      [catRepositoryKey]: () => {
+        const axios = this.get('axios')
+        return new CatRepository(axios)
+      },
+      [nameRepositoryKey]: () => {
+        const axios = this.get('axios')
+        return new NameRepository(axios)
       },
       axios: () => {
         axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'

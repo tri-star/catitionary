@@ -9,6 +9,7 @@ use App\Domain\CatType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * App\Domain\Name\NameIdea
@@ -30,6 +31,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|CatCharacterics[] $catCharacterics
  * @property-read int|null $cat_characterics_count
+ * @property-read \App\Domain\Name\NamePattern|null $namePattern
  */
 class NameIdea extends Model
 {
@@ -62,6 +64,16 @@ class NameIdea extends Model
             'name_idea_id',
             'cat_characterics_id',
             'id',
+            'id'
+        );
+    }
+
+
+    public function namePattern(): HasOne
+    {
+        return $this->hasOne(
+            NamePattern::class,
+            'name_idea_id',
             'id'
         );
     }
